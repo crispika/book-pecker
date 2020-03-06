@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="学习使我快乐，我是一台无情的学习机器|一个寻找精品电子书，分享读书笔记的小站。">
+    <meta name="keywords" content="啄书网，图书，电子书，电子笔记，分享无纸化办公">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 啄书 —— 学习使我快乐！</title>
+
+    <!-- TODO favicon -->
+    <link rel="shortcut icon" href="../img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/reset.css">
+    <!-- iconfont -->
+    <link rel="stylesheet" href="../font/iconfont.css">
+    <!-- for reuse -->
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- for home page -->
+    <link rel="stylesheet" href="../css/index.css">
+</head>
+<body>
+    
+    <!-- TODO 公共版头 -->
+    <header>
+
+    </header>
+
+    <nav>
+        <div class="logo">
+             <!-- XXX 雪碧图 logo切换 -->
+             <a href="javscript:;" class="logo">
+                 <i class="iconfont icon-zhuomuniaoxitong"></i>
+                 <h1><span>啄书网</span>.com</h1> 
+             </a>
+            
+        </div>
+        
+        <div class="search-bar-wrap">
+            <form action="">
+                <input type="text" class='q'>
+                <input type="submit" class="btn" value="">
+                <!-- TODO tags 热搜词/关键词 点击跳相关搜索页 -->
+            </form>
+        </div>
+
+        <div class="cart-info-wrap">
+            <div class="trolley">
+                <a href="">购物车</a>
+            </div>
+            <div class="info">
+                <a href="">关于我们</a>
+            </div>
+        </div>
+    </nav>
+</body>
+</html>

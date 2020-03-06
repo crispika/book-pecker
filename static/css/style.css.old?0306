@@ -1,0 +1,73 @@
+
+/*  导航部分 
+ *  宽度：3/4*1960 = 1470px
+ *  高度：1080/16 = 67.5px
+ *  中间宽度：1470*3/5 = 882px
+ *  两边宽度：1470*1/5 = 294px
+ *  logo-icon-font-size: 60px
+ *  logo-text-font-size: 25px
+ */
+
+nav{
+    width: 1470px;          /* 3/4*1960 */
+    height: 67.5px;         /* 1080/16 */
+    background: #bfa;
+    margin: 0 auto;
+}
+
+/* Logo */
+nav div.logo{
+    width: 294px;
+    height: 100%; 
+    float: left;
+}
+
+nav a.logo{
+    /* 使图标垂直居中 */
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+nav a.logo i{
+    display: inline-block;
+    font-size: 60px;
+}
+
+nav h1{
+    margin-left: -6.5%;
+    display: inline;
+}
+
+nav h1 span{
+    font-size: 25px;
+}
+
+/* Search Bar */
+nav div.search-bar-wrap{
+    width: 882px;
+    height: 100%;
+    float: left;
+}
+
+nav form{
+    padding-top: 30px;
+    /* display: table-cell;
+    vertical-align: middle; */
+}
+
+nav .search-bar-wrap .q{
+    display: inline;
+    height: 25px;
+    width: 600px;
+    border: 1px solid #aaa;
+    float: left;
+}
+
+nav .search-bar-wrap .btn{
+    border-left:none;
+    width: 50px;
+    height: 27px;
+    float: left;
+}
+

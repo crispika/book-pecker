@@ -1,0 +1,31 @@
+body{
+    background-color: #eee;
+}
+header,footer{
+    width: 100%;
+
+    /* temp style for visual aid*/
+    height: 150px;
+    background: #ddd;
+    border: 1px solid;
+    font-size: 30px;
+    text-align: center;
+    line-height: 150px;
+}
+
+/*  主体部分:
+ *  
+ *  宽度：1960*3/4 = 1470px
+ *  
+ *  
+ */
+
+main{
+    width: 1470px;
+    height: 1000px;
+    margin: 0 auto;
+
+    /* temp style for visual aid*/
+    background-color: #baa;
+    border: 1px solid #ddd;
+}
