@@ -1,5 +1,13 @@
+.clearfix::before,
+.clearfix::after{
+    content: "";
+    display: table;
+    clear: both;
+}
+
 body{
     background-color: #eee;
+    font: 12px/1.5 tahoma,arial,'Hiragino Sans GB','\5b8b\4f53',sans-serif;
 }
 header,footer{
     width: 100%;
@@ -7,7 +15,7 @@ header,footer{
     /* temp style for visual aid*/
     height: 150px;
     background: #ddd;
-    border: 1px solid;
+    border: 1px solid #ccc;
     font-size: 30px;
     text-align: center;
     line-height: 150px;
@@ -16,16 +24,74 @@ header,footer{
 /*  主体部分:
  *  
  *  宽度：1960*3/4 = 1470px
- *  
+ *  book-item-width: 280px
  *  
  */
 
 main{
     width: 1470px;
-    height: 1000px;
     margin: 0 auto;
+    background-color: #fff;
+    /* temp style for visual aid*/
+    border: 1px solid #ddd;
+}
+
+main ul.book-shelf{
 
     /* temp style for visual aid*/
-    background-color: #baa;
-    border: 1px solid #ddd;
+    /* border: 3px solid #aaa; */
+}
+
+main li.book-item{
+    width: 280px;
+    padding: 0 42.5px;
+    margin: 24px 0;
+    float: left;
+    /* temp style for visual aid*/
+    border-left: 1px solid #bbb;
+}
+
+main li.book-item:nth-child(4n-3){
+    border-left: none;
+}
+
+/* main img.book-cover-wrap{
+    width: 280px;
+    display: table-cell;
+    text-align: center;
+} */
+
+main img.book-cover{
+    vertical-align: baseline;
+}
+
+/* 书信息 */
+main div.bookinfo-wrap{
+    float:left;
+}
+
+main h3.book-name{
+    font-size: 30px;
+}
+
+main p.book-author{
+    font-size: 15px;
+}
+main p.book-price{
+    font-size: 20px;
+}
+
+/* 购物车 */
+main a.trolley{
+    display: block;
+    float:right;
+    vertical-align: bottom
+}
+
+main i.cart-icon{
+    display: block;
+    margin-top: 28px;
+    font-size: 60px;
+    color: #666;
+    
 }
