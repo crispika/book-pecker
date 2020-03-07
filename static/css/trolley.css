@@ -1,0 +1,146 @@
+/* 主体 */
+main {
+    width: 960px;
+}
+
+/* 空购物车信息 */
+main div.empty-info{
+    height: 180px;
+    line-height: 180px;
+    font-size: 30px;
+    color: #cacbcb;
+    text-align: center;
+}
+
+/*  购物车表头 
+*   - 宽度:
+*       全选: 202px
+*       商品信息: 280px
+*       其他: 119.5px
+*/
+main ul.trolley-head {
+    height: 45px;
+    margin: 0 auto;
+    font-size: 13px;
+}
+
+main ul.trolley-head li {
+    line-height: 45px;
+    color: #969696;
+    float: left;
+}
+
+main ul.trolley-head li.checkbox {
+    padding-left: 2px;
+    width: 200px;
+}
+
+main ul.trolley-head li.book-info {
+    width: 280px;
+}
+
+main ul.trolley-head li.other {
+    /* text-align: center; */
+    width: 119.5px;
+}
+
+/*  购物车内容列表 
+*   - 高度：215px
+*   - 宽度：
+*       选择框：48px
+*       封面框：202 - 48 = 154px
+*       info：280px
+*       other: 119.5 px
+*   
+*/
+main ul.trolley-list {
+
+    /* temp style for visual aid*/
+    /* background-color: #fff; */
+}
+
+main li.trolley-item {
+    height: 215px;
+    line-height: 215px;
+    float: left;
+    border-top: 1px solid #cacbcb;
+    /* temp style for visual aid*/
+    /* background-color: honeydew; */
+}
+
+main li.trolley-item.checkbox-wrap {
+    width: 48px;
+    text-align: center;
+    /* temp style for visual aid*/
+    /* background-color: cadetblue; */
+}
+
+/* 封面 */
+main li.trolley-item.img-wrap {
+    width: 154px;
+    position: relative;
+}
+
+main li.trolley-item img {
+    height: 150px;
+    /* 在div中垂直水平居中 */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 书籍名称 */
+main li.trolley-item.book-info {
+    width: 280px;
+}
+
+/* 价格等info */
+main li.trolley-item.other {
+    width: 119.5px;
+}
+
+/* 更改数量组件 */
+main li.trolley-item.other div.qty-wrap {
+    line-height: 18px;
+    padding-top: 95px;
+    margin: 0 auto;
+}
+
+main li.trolley-item.other input.qty {
+    float: left;
+    width: 25px;
+    height: 20px;
+    text-align: center;
+    border: solid #cacbcb;
+    border-width: 1px 0;
+
+}
+
+main li.trolley-item.other a {
+    text-align: center;
+    float: left;
+    width: 25px;
+    height: 20px;
+    background-color: #F2F2F2;
+    border: 1px solid #cacbcb;
+}
+
+main li.trolley-item.other a:hover{
+    background-color: #ddd;
+}
+
+/* 删除购物车item */
+main li.trolley-item.delete-item{
+    width: 119.5px;
+    
+}
+
+main li.trolley-item.delete-item a{
+    color: #969696;
+}
+
+main li.trolley-item.delete-item a:hover{
+    color: #333;
+}
+

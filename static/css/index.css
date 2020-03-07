@@ -1,0 +1,48 @@
+
+/* 主体-书信息块 */
+main li.book-item{
+    width: 280px;
+    padding: 0 42.5px;
+    margin: 24px 0;
+    float: left;
+    border-left: 1px solid #bbb;
+}
+
+main li.book-item:nth-child(4n-3){
+    border-left: none;
+}
+
+main img.book-cover{
+    vertical-align: baseline;
+}
+
+/* 书信息 */
+main div.bookinfo-wrap{
+    float:left;
+}
+
+main h3.book-name{
+    font-size: 30px;
+}
+
+main p.book-author{
+    font-size: 15px;
+}
+main p.book-price{
+    font-size: 20px;
+}
+
+/* 购物车icon */
+main a.trolley{
+    display: block;
+    float:right;
+    vertical-align: bottom
+}
+
+main i.cart-icon{
+    display: block;
+    margin-top: 28px;
+    font-size: 60px;
+    color: #666;
+    
+}
