@@ -26,8 +26,8 @@ if (!window.localStorage || typeof (JSON) == 'undefined') {
             // get info of the chosen book and save to localstorage
             let book_name = this.parentNode.querySelector(".book-name").innerHTML;
             //obtain the trolley info saved in local storage
-            console.log(get_trolley_obj());
-            let trolley_jsonObj = get_trolley_obj() || {};
+            console.log(db_get_trolley_obj());
+            let trolley_jsonObj = db_get_trolley_obj() || {};
             
             // XXX later,此处应用book-id替代
             console.log(trolley_jsonObj[book_name]);
