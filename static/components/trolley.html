@@ -25,8 +25,8 @@
         </div>
 
         <!-- 购物车表头 -->
-        <ul class="trolley-head">
-            <li class="checkbox">
+        <!-- <ul class="trolley-head">
+            <li class="check-all">
                 <input type="checkbox" name="check-all" id="">
                 全选
             </li>
@@ -35,10 +35,10 @@
             <li class="other">数量</li>
             <li class="other">金额（元）</li>
             <li class="other">操作</li>
-        </ul>
+        </ul> -->
 
         <!-- 购物车item项 -->
-        <ul class="trolley-list clearfix">
+        <!-- <ul class="trolley-list clearfix">
             <li class="trolley-item checkbox-wrap">
                 <input type="checkbox" class="check-trolley-item" name="" id="">
             </li>
@@ -48,26 +48,44 @@
             <li class="trolley-item book-info">
                 <h3 class="book-title">书籍名称</h3>
             </li>
-            <li class="trolley-item other">￥2.99</li>
+            <li class="trolley-item other price">￥2.99</li>
             <li class="trolley-item other">
                 <div class="qty-wrap">
-                    <a href="javascript:;" class="qty-">-</a>
+                    <a href="javascript:;" class="reduce-qty">-</a>
                     <input class="qty" type="text" value="1">
-                    <a href="javascript:;" class="qty+">+</a>
+                    <a href="javascript:;" class="add-qty">+</a>
                 </div>
 
             </li>
-            <li class="trolley-item other">￥2.99</li>
+            <li class="trolley-item other subtotal">￥2.99</li>
             <li class="trolley-item delete-item">
                 <a href="javascript:;" class="delete-item">删除</a>
             </li>
-        </ul>
+        </ul> -->
+
+        
+        <!-- 购物车总计付款条 -->
+       <!-- <ul class="trolley-total">
+        <li class="check-all">
+            <input type="checkbox" name="check-all" id="">
+            全选
+        </li>
+        <li class="total-item-count">
+            已选择<span id="total-item-count">0</span>件商品
+        </li>
+        <li class="total-price">
+            总价 <span id="total-price">￥0.00</span>
+        </li>
+        <li class="pay-btn-wrap">
+            <a href="javascript:void(0)" class="pay-btn">结算</a>
+        </li>
+       </ul> -->
 
     </main>
 
     <footer>footer</footer>
-
-    <script src="../js/torlley.js"></script>
+    <script src="../js/util.js"></script>
+    <script src="../js/trolley.js"></script>
 </body>
 
 </html>

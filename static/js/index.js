@@ -26,15 +26,15 @@ if (!window.localStorage || typeof (JSON) == 'undefined') {
             // get info of the chosen book and save to localstorage
             let book_name = this.parentNode.querySelector(".book-name").innerHTML;
             //obtain the trolley info saved in local storage
-            let trolley_jsonString = db.trolley_info || "{}";  
-            let trolley_jsonObj = JSON.parse(trolley_jsonString);
+            console.log(get_trolley_obj());
+            let trolley_jsonObj = get_trolley_obj() || {};
             
             // XXX later,此处应用book-id替代
             console.log(trolley_jsonObj[book_name]);
 
             if(trolley_jsonObj[book_name]){
-                
                 trolley_jsonObj[book_name].qty +=1;
+                trolley_jsonObj[book_name].input_disabled = false;
             }else{
                 let book_price = this.parentNode.querySelector(".book-price").innerHTML;
                 let book_cover= this.parentNode.querySelector("img").src;
@@ -42,9 +42,11 @@ if (!window.localStorage || typeof (JSON) == 'undefined') {
                 book_cover = book_cover.slice(book_cover.match("/img/").index); 
 
                 trolley_jsonObj[book_name]={
+                    "book_name":book_name,
                     "qty":1,
                     "book_price":book_price,
                     "book_cover":book_cover,
+                    "input_disabled":true,
                 }    
             }
             // put the edited data back to localstorage
@@ -58,5 +60,4 @@ if (!window.localStorage || typeof (JSON) == 'undefined') {
             }
         }
     }
-
 }

@@ -13,23 +13,33 @@ main li.book-item:nth-child(4n-3){
 }
 
 main img.book-cover{
+    display: table-cell;
     vertical-align: baseline;
+    height: 375px;
+    margin: 0 auto;
+    border: double 0.5px #bbb;
 }
 
 /* 书信息 */
 main div.bookinfo-wrap{
+    margin-top:5px;
+    width: 214px;
     float:left;
+    line-height: 24px;
 }
 
 main h3.book-name{
-    font-size: 30px;
+    height: 48px;
+    line-height: 24px;
+    font-size: 22px;
+    vertical-align: baseline;
 }
 
 main p.book-author{
-    font-size: 15px;
+    font-size: 14px;
 }
 main p.book-price{
-    font-size: 20px;
+    font-size: 18px;
 }
 
 /* 购物车icon */

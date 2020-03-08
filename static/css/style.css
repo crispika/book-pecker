@@ -21,6 +21,14 @@ header,footer{
     line-height: 150px;
 }
 
+header{
+    margin-bottom: 20px;
+}
+
+footer{
+    margin-top: 20px;
+}
+
 /*  主体部分:
  *  
  *  宽度：1960*3/4 = 1470px

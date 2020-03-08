@@ -1,15 +1,24 @@
 /* 主体 */
 main {
     width: 960px;
+    color: #969696;
+    border-color:#cacbcb;
 }
 
-/* 空购物车信息 */
+main>ul{
+    border-bottom: 1px solid #cacbcb;
+}
+
+/* 空购物车信息栏
+*
+*/
 main div.empty-info{
     height: 180px;
     line-height: 180px;
     font-size: 30px;
     color: #cacbcb;
     text-align: center;
+    display: none;
 }
 
 /*  购物车表头 
@@ -26,11 +35,10 @@ main ul.trolley-head {
 
 main ul.trolley-head li {
     line-height: 45px;
-    color: #969696;
     float: left;
 }
 
-main ul.trolley-head li.checkbox {
+main li.check-all {
     padding-left: 2px;
     width: 200px;
 }
@@ -53,17 +61,11 @@ main ul.trolley-head li.other {
 *       other: 119.5 px
 *   
 */
-main ul.trolley-list {
-
-    /* temp style for visual aid*/
-    /* background-color: #fff; */
-}
-
 main li.trolley-item {
     height: 215px;
     line-height: 215px;
     float: left;
-    border-top: 1px solid #cacbcb;
+    /* border-bottom: 1px solid #cacbcb; */
     /* temp style for visual aid*/
     /* background-color: honeydew; */
 }
@@ -92,11 +94,13 @@ main li.trolley-item img {
 
 /* 书籍名称 */
 main li.trolley-item.book-info {
+    color: #333;
     width: 280px;
 }
 
 /* 价格等info */
 main li.trolley-item.other {
+    color: #333;
     width: 119.5px;
 }
 
@@ -114,7 +118,6 @@ main li.trolley-item.other input.qty {
     text-align: center;
     border: solid #cacbcb;
     border-width: 1px 0;
-
 }
 
 main li.trolley-item.other a {
@@ -143,4 +146,54 @@ main li.trolley-item.delete-item a{
 main li.trolley-item.delete-item a:hover{
     color: #333;
 }
+
+/*  购物车总计条: 
+*   - height: 50px
+*   - width:
+*       check-all:202px
+*       total-item-count:280+119.5*2 = 519px
+*       total-price,pay-btn-wrap: 119.5px
+*/
+main ul.trolley-total{
+    line-height: 50px;
+    /* __problem__: margin会有边框，设计问题，应在开始布局时就将大框架搭好 */
+    /* margin: 20px 0; */ 
+    height: 50px;
+    border-bottom: none;
+}
+
+main ul.trolley-total li{
+    float: left;
+}
+
+main li.total-item-count{
+    width: 519px;
+}
+
+main li.total-price,
+main li.pay-btn-wrap{
+    width: 119.5px;
+}
+
+main a.pay-btn{
+    border-left: 1px solid #cacbcb;
+    display: block;
+    background-color: #eaeaea;
+    font-size: 20px;
+    text-align: center;
+}
+
+/* 设置总计中件数与总价数字的特殊显示 */
+#total-item-count{
+    font-size: 18px;
+    color: #333;
+}
+
+#total-price{
+    font-size: 20px;
+    color: #333;
+}
+
+
+
 
