@@ -3,10 +3,25 @@ import PropTypes from 'prop-types';
 import BookItem from "../book-item/book-item";
 import { Row, Col, Pagination } from 'antd';
 import { pages_bg_color } from "../../assets/color";
+import { connect } from 'react-redux';
+import {getBookList}from "../../redux/actions.js"
 
-export default class BookList extends Component {
+
+
+class BookList extends Component {
+
+    componentDidMount() {
+        this.props.getBookList();
+    }
+
+    // // 将已经加入购物车的书从列表页中移除
+    // pickBook = (id) => {
+    //     const picked_list = this.state.book_list.filter(book => book.id !== id)
+    //     this.setState({book_list:picked_list})
+    // }
 
     render() {
+        debugger
         const {book_list}=this.props;
         return (
             <div className="book-list-wrapper"
@@ -21,8 +36,9 @@ export default class BookList extends Component {
                 <Row justify="space-around" align="middle" gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
                     {book_list.map(
                         (book_info,index)=>
-                            <Col span={8} >
-                                <BookItem key={index} book_info={book_info}/>
+                            <Col span={8} key={index}>
+                                {/* <BookItem  book_info={book_info} pickBook={this.pickBook}/> */}
+                                <BookItem  book_info={book_info} />
                             </Col>
                     )}
                 </Row>
@@ -41,5 +57,11 @@ export default class BookList extends Component {
 }
 
 BookList.propTypes = {
+    getBookList: PropTypes.func.isRequired,
     book_list: PropTypes.array.isRequired,
-  }
+}
+
+export default connect(
+    state => ({book_list:state.book_list}),
+    {getBookList}
+    )(BookList)
