@@ -51,13 +51,19 @@ class BookItem extends Component {
                 // bodyStyle={{width: 300, margin: "0 auto"}}
                 cover={
                     <Link to={`/description/${id}`} >
-                        <img
-                            style={{width:"100%"}}
+                    <div style={{
+                        width: '100%',
+                        height: '200px',
+                        background: `url(${url}) no-repeat center`,
+                        backgroundSize: 'contain'
+                    }}></div>
+                        {/* <img
+                            style={{width:"100%", height: '210px'}}
                             alt="book-cover"
                             // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                             // src="http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png"
                             src={url}
-                        />
+                        /> */}
                     </Link>
                 }
                 actions={[
