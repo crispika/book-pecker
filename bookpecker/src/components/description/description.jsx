@@ -24,11 +24,10 @@ class Description extends Component {
 
     render() {
         console.log(this.props.book_description);
-        const {book_description} = this.props;
-        console.log(book_description);
-        console.log(this.props.book_description.book_comments);
-        // const {book_comments} = book_description;
-        // console.log(book_comments)
+        const {book_info, book_comments} = this.props.book_description
+        console.log(book_info,book_comments);
+
+
 
         return (
             <div
