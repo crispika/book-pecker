@@ -1,18 +1,35 @@
 import React, { Component } from 'react';
 import { Card, Descriptions, Rate } from "antd";
-import { light_aoi, light_grey } from "../../assets/color"
-import GradeSpread from '../grade-spread'
-import CommentItem from '../comment-item'
 import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import {connect} from "react-redux";
+import {PropTypes} from "prop-types";
 
-export default class Description extends Component {
+import { light_grey } from "../../assets/color";
+import GradeSpread from '../grade-spread';
+import CommentItem from '../comment-item';
+import {getBookInfo,getBookComments} from "../../redux/actions";
+
+
+class Description extends Component {
     constructor(props) {
         super(props)
         console.log(this.props.match.params.id)
 
     }
 
+    componentDidMount() {
+        this.props.getBookInfo();
+        this.props.getBookComments();
+    }
+
     render() {
+        console.log(this.props.book_description);
+        const {book_description} = this.props;
+        console.log(book_description);
+        console.log(this.props.book_description.book_comments);
+        // const {book_comments} = book_description;
+        // console.log(book_comments)
+
         return (
             <div
                 style={{
@@ -54,7 +71,7 @@ export default class Description extends Component {
 
                     {/* 书籍基本信息 */}
                     <Card
-                        title="书籍标题"
+                        title="书籍名称"
                         style={{ width: 500, backgroundColor: light_grey, flexGrow: 1, borderBottom: 0, borderRight: 0 }}
                         headStyle={{ fontSize: 18 }}
                     >
@@ -96,7 +113,7 @@ export default class Description extends Component {
                 {/* 书籍简介 */}
                 <Card
                     title="书籍简介"
-                    style={{ width: 980, backgroundColor: light_grey }}
+                    style={{ width: 980, backgroundColor: light_grey, borderBottom:0}}
                 // bodyStyle={{backgroundColor:light_aoi}} 
                 // bordered={false}
                 >
@@ -123,3 +140,16 @@ export default class Description extends Component {
         )
     }
 }
+
+Description.propTypes = {
+    book_description: PropTypes.object.isRequired,
+    getBookInfo: PropTypes.func.isRequired,
+    getBookComments: PropTypes.func.isRequired,
+}
+
+export default connect(
+    state => ({book_description:state.book_description}),
+    {getBookInfo,getBookComments}
+)(Description);
+
+

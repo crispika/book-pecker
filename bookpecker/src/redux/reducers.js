@@ -1,17 +1,30 @@
-import {combineReducers} from "redux";
-import {RECEIVE_BOOKLIST,DELETE_BOOK} from "./action-types"
+import { combineReducers } from "redux";
+import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS } from "./action-types"
 
-function book_list(book_list=[],action){
+function book_list(state = [], action) {
     switch (action.type) {
         case RECEIVE_BOOKLIST:
             return action.data;
         case DELETE_BOOK:
-            return book_list.filter(book => book.id !== action.data);
+            return state.filter(book => book.id !== action.data);
         default:
-            return book_list;
+            return state;
     }
 }
 
+function book_description(state = {}, action) {
+    switch (action.type) {
+        case RECEIVE_BOOKINFO:
+            return Object.assign(state, action.data);
+        case RECEIVE_BOOK_COMMENTS:
+            return Object.assign(state, action.data);
+        default:
+            return state;
+    }
+}
+
+
 export default combineReducers({
     book_list,
+    book_description,
 })
