@@ -27,6 +27,7 @@ class BookList extends Component {
     render() {
         // debugger
         const {book_list}=this.props;
+        console.log(book_list)
         return (
             <div className="book-list-wrapper"
                 style={{

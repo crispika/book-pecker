@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { Card, Descriptions, Rate } from "antd";
 import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined, CheckCircleOutlined } from '@ant-design/icons';
-import {connect} from "react-redux";
-import {PropTypes} from "prop-types";
+import { connect } from "react-redux";
+import { PropTypes } from "prop-types";
 
 import { light_grey } from "../../assets/color";
 import GradeSpread from '../grade-spread';
 import CommentItem from '../comment-item';
-import {getBookInfo,getBookComments} from "../../redux/actions";
+import { getBookInfo, getBookComments } from "../../redux/actions";
 
 
 class Description extends Component {
@@ -24,10 +24,8 @@ class Description extends Component {
 
     render() {
         console.log(this.props.book_description);
-        const {book_info, book_comments} = this.props.book_description
-        console.log(book_info,book_comments);
-
-
+        const { book_info, book_comments } = this.props.book_description
+        // console.log(book_info,book_comments);
 
         return (
             <div
@@ -37,104 +35,112 @@ class Description extends Component {
                     backgroundColor: light_grey,
                 }}
             >
-                <div
-                    className="description-header-wrapper"
-                    style={{
-                        display: "flex",
-                        // justifyContent: "space-between",
-                    }}
-                >
-                    {/* 封面 */}
-                    <Card
+                {/* 条件渲染 */}
+                {book_info && (
+                    <div
+                        className="description-header-wrapper"
                         style={{
-                            width: 250,
-                            borderRight: 0,
-                            borderBottom: 0,
-                            backgroundColor: light_grey,
+                            display: "flex",
+                            // justifyContent: "space-between",
                         }}
-                        bodyStyle={{ padding: 0 }}
-                        cover={
-                            <img
-                                style={{ width: "100%", margin: "0 auto" }}
-                                src="http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png"
-                                alt="book-cover"
-                            />}
-                        actions={[
-                            <StarOutlined key="wish" />,
-                            <ShoppingCartOutlined key="trolley" />,
-                            <ShareAltOutlined key="share" />,
-                        ]}
                     >
-                    </Card>
-
-
-                    {/* 书籍基本信息 */}
-                    <Card
-                        title="书籍名称"
-                        style={{ width: 500, backgroundColor: light_grey, flexGrow: 1, borderBottom: 0, borderRight: 0 }}
-                        headStyle={{ fontSize: 18 }}
-                    >
-                        <Descriptions
-                            size="small"
-                            column={1}
+                        {/* 封面 */}
+                        <Card
+                            style={{
+                                width: 250,
+                                borderRight: 0,
+                                borderBottom: 0,
+                                backgroundColor: light_grey,
+                            }}
+                            bodyStyle={{ padding: 0 }}
+                            cover={
+                                <div style={{
+                                    marginTop: 16,
+                                    width: '100%',
+                                    height: '235px',
+                                    background: 'no-repeat center',
+                                    backgroundImage: `url(${book_info.cover})`,
+                                    backgroundSize: 'contain'
+                                }}></div>
+                                // <img
+                                //     style={{ width: "100%", margin: "0 auto" }}
+                                //     src="http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png"
+                                //     alt="book-cover"
+                                // />
+                            }
+                            actions={[
+                                <StarOutlined key="wish" />,
+                                <ShoppingCartOutlined key="trolley" />,
+                                <ShareAltOutlined key="share" />,
+                            ]}
                         >
-                            <Descriptions.Item label="作者">XXXXXXX</Descriptions.Item>
-                            <Descriptions.Item label="出版社">XXXXXXX</Descriptions.Item>
-                            <Descriptions.Item label="出版年份">1999</Descriptions.Item>
-                            <Descriptions.Item label="页数">300</Descriptions.Item>
-                            <Descriptions.Item label="价格">35</Descriptions.Item>
-                            <Descriptions.Item label="ISBN">9787540486198</Descriptions.Item>
-                        </Descriptions>
-                    </Card>
+                        </Card>
 
-                    {/* 书籍评分信息 */}
-                    <Card
-                        title="书籍评分"
-                        style={{ width: 250, backgroundColor: light_grey, size: "small", borderBottom: 0 }}
-                        headStyle={{ fontSize: 14, paddingTop: 6 }}
-                    >
-                        <div className="grade-wrapper" style={{ display: "flex" }}>
-                            <div className="grade" style={{ fontSize: 26, flexGrow: 2 }}>8.6</div>
-                            <div className="rate" style={{ flexGrow: 3 }}>
-                                <Rate defaultValue={4.5} allowHalf disabled></Rate>
+
+                        {/* 书籍基本信息 */}
+                        <Card
+                            title={book_info.bookname}
+                            style={{ width: 500, backgroundColor: light_grey, flexGrow: 1, borderBottom: 0, borderRight: 0 }}
+                            headStyle={{ fontSize: 18 }}
+                        >
+                            <Descriptions
+                                size="small"
+                                column={1}
+                            >
+                                <Descriptions.Item label="作者">{book_info.author}</Descriptions.Item>
+                                <Descriptions.Item label="出版社">{book_info.press}</Descriptions.Item>
+                                <Descriptions.Item label="出版年份">{book_info.publish_year}</Descriptions.Item>
+                                <Descriptions.Item label="页数">{book_info.number_of_pages}</Descriptions.Item>
+                                <Descriptions.Item label="价格">{book_info.price}</Descriptions.Item>
+                                <Descriptions.Item label="ISBN">{book_info.ISBN}</Descriptions.Item>
+                            </Descriptions>
+                        </Card>
+
+                        {/* 书籍评分信息 */}
+                        <Card
+                            title="书籍评分"
+                            style={{ width: 250, backgroundColor: light_grey, size: "small", borderBottom: 0 }}
+                            headStyle={{ fontSize: 14, paddingTop: 6 }}
+                        >
+                            <div className="grade-wrapper" style={{ display: "flex" }}>
+                                <div className="grade" style={{ fontSize: 26, flexGrow: 2 }}>{book_info.grade}</div>
+                                <div className="rate" style={{ flexGrow: 3 }}>
+                                    <Rate defaultValue={book_info.star} allowHalf disabled></Rate>
+                                </div>
                             </div>
-                        </div>
-                        <div className="grade-spread-wrapper" style={{ height: 150, marginTop: 10, display: "flex", flexDirection: "column", }}>
-                            <GradeSpread />
-                            <GradeSpread />
-                            <GradeSpread />
-                            <GradeSpread />
-                            <GradeSpread />
-                        </div>
+                            <div className="grade-spread-wrapper" style={{ height: 150, marginTop: 10, display: "flex", flexDirection: "column", }}>
+                                {book_info.grade_spread.map(
+                                    (grade,index)=><GradeSpread key={index} grade={grade}/>
+                                )}
+                            </div>
+                        </Card>
+                    </div>
+                )}
+
+                {/* 书籍简介，条件渲染 */}
+                {book_info && (
+                    <Card
+                        title="书籍简介"
+                        style={{ width: 980, backgroundColor: light_grey, borderBottom: 0 }}
+                    >
+                        <div dangerouslySetInnerHTML = {{ __html:book_info.description }}></div>
                     </Card>
-                </div>
+                )}
 
-                {/* 书籍简介 */}
-                <Card
-                    title="书籍简介"
-                    style={{ width: 980, backgroundColor: light_grey, borderBottom:0}}
-                // bodyStyle={{backgroundColor:light_aoi}} 
-                // bordered={false}
-                >
-                    <p>cotent</p>
-                    <p>cotent</p>
-                    <p>cotent</p>
-                    <p>cotent</p>
-                    <p>cotent</p>
-                    <p>cotent</p>
-                </Card>
-
-                {/* 书籍评论 */}
-                <Card
-                    title="书籍评论"
-                    style={{ width: 980, backgroundColor: light_grey }}
-                // bodyStyle={{backgroundColor:light_aoi}} 
-                // bordered={false}
-                >
-                    <CommentItem />
-                    <CommentItem />
-                    <CommentItem />
-                </Card>
+                {/* 书籍评论，条件渲染 */}
+                {book_comments && (
+                    <Card
+                        title="书籍评论"
+                        style={{ width: 980, backgroundColor: light_grey }}
+                    // bodyStyle={{backgroundColor:light_aoi}} 
+                    // bordered={false}
+                    >
+                        {book_comments.map(
+                            (comment,index) => <CommentItem key={index} comment={comment}/>
+                        )}
+                        
+                    </Card>
+                )}
             </div>
         )
     }
@@ -147,8 +153,8 @@ Description.propTypes = {
 }
 
 export default connect(
-    state => ({book_description:state.book_description}),
-    {getBookInfo,getBookComments}
+    state => ({ book_description: state.book_description }),
+    { getBookInfo, getBookComments }
 )(Description);
 
 

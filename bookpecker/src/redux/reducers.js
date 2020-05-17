@@ -15,11 +15,11 @@ function book_list(state = [], action) {
 function book_description(state = {}, action) {
     switch (action.type) {
         case RECEIVE_BOOKINFO:
-            // return Object.assign({}, state, action.data);
-            return Object.assign(state, action.data); //修改了老状态，导致bug
+            return Object.assign({}, state, action.data);
+            // return Object.assign(state, action.data); //修改了老状态，导致bug
         case RECEIVE_BOOK_COMMENTS:
-            // return Object.assign({}, state, action.data);
-            return Object.assign(state, action.data);
+            return Object.assign({}, state, action.data);
+            // return Object.assign(state, action.data);
         default:
             return state;
     }

@@ -89,14 +89,17 @@ export const getBookInfo = (id) => {
             const book_info = {book_info: {
                 id: id,
                 bookname: "猫不存在",
-                cover: "../../assets/img/no_cat_exists.jpg",
+                cover: "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
                 author: " [美] 厄休拉・勒古恩",
                 ISBN: "9787540486198",
                 press: "湖南文艺出版社",
                 publish_year: "2020-5",
                 number_of_pages: "408",
-                price: "￥ 49.8",
-                description: "<p>科幻文化领域专业影响力品牌、亚太科幻大会主办方未来事务管理局重磅新作，致力打造中国科幻的黄金时代。<p/><p>科幻文化领域专业影响力品牌、亚太科幻大会主办方未来事务管理局重磅新作，致力打造中国科幻的黄金时代。<p/><p>内附《牛筋名猫录》漫画师阿科创作的刘慈欣、韩松、儒勒・凡尔纳、阿瑟・C・克拉克、厄休拉・勒古恩等 9 位科幻作家猫漫画。<p/><p>融合虚构与非虚构，带你领略：有了猫，你就有了整个宇宙；在你腿上的毛茸茸，藏着宇宙的大秘密。</p>"
+                price: "￥49.8",
+                grade: "8",
+                star: "4",
+                grade_spread: [["5星",50],["4星", 0],["3星",50],["2星",0],["1星",0]],
+                description: "<p>科幻文化领域专业影响力品牌、亚太科幻大会主办方未来事务管理局重磅新作，致力打造中国科幻的黄金时代。<p/><p>从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。17 个国内外科幻作家有关猫的科幻故事，5 篇与猫相关的科幻趣文。<p/><p>内附《牛筋名猫录》漫画师阿科创作的刘慈欣、韩松、儒勒・凡尔纳、阿瑟・C・克拉克、厄休拉・勒古恩等 9 位科幻作家猫漫画。<p/><p>融合虚构与非虚构，带你领略：有了猫，你就有了整个宇宙；在你腿上的毛茸茸，藏着宇宙的大秘密。</p>"
             }}
             dispatch(receiveBookInfo(book_info));
         }, 1000);
@@ -116,7 +119,8 @@ export const getBookComments = (id) => {
         //模拟异步获取数据
         setTimeout(() => {
             const book_comments = {book_comments: [
-                {username:"Jack", comment:"xxxxxxxxxx",like:"66",dislike:"33"},
+                {username:"Jack", comment:"you jump i jump",like:"66",dislike:"33"},
+                {username:"rose", comment:"you can you jump",like:"666",dislike:"333"},
             ]}
             dispatch(receiveBookComments(book_comments));
         }, 1000);
