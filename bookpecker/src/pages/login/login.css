@@ -1,0 +1,33 @@
+div.login-wrapper {
+  width: 600px;
+  height: 400px;
+  margin: 250px auto;
+  margin-bottom: 300px;
+  background-color: #EEF6F6;
+  padding: 30px 40px;
+}
+div.login-wrapper h2 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+div.login-wrapper .login-form {
+  width: 300px;
+  height: 222px;
+  margin: 30px auto;
+}
+div.login-wrapper .login-form .form-item {
+  margin-bottom: 20px;
+}
+div.login-wrapper .login-form input {
+  font-size: 14px;
+}
+div.login-wrapper .login-form .login-form-button {
+  width: 100%;
+  height: 100%;
+  font-size: 18px;
+}
+div.login-wrapper .login-form a {
+  font-size: 14px;
+}
+/*# sourceMappingURL=./login.css.map */

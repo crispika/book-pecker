@@ -1,0 +1,15 @@
+div.register-wrapper {
+  width: 700px;
+  margin: 200px auto;
+  padding: 20px 30px;
+  background-color: #EEF6F6;
+}
+div.register-wrapper h2 {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+div.register-wrapper form {
+  width: 600px;
+}
+/*# sourceMappingURL=./register.css.map */
