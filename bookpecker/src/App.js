@@ -3,7 +3,7 @@
  */
 
 import React, { Component } from 'react';
-import { Layout, Descriptions } from 'antd';
+import { Layout } from 'antd';
 import { Switch, Route, Redirect } from "react-router-dom"
 import MyHeader from './pages/header/header';
 import BookList from './pages/book-list/book-list';

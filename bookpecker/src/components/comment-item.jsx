@@ -3,21 +3,50 @@ import { Comment, Tooltip, Avatar } from 'antd';
 import moment from 'moment';
 import { DislikeOutlined, LikeOutlined, DislikeFilled, LikeFilled } from '@ant-design/icons';
 
-const CommentItem = () => {
-  const [likes, setLikes] = useState(0);
-  const [dislikes, setDislikes] = useState(0);
-  const [action, setAction] = useState(null);
+
+const CommentItem = (props) => {
+  const { username, comment, avatar, number_of_like, number_of_dislike, my_action,created_time } = props.comment;
+
+  const [likes, setLikes] = useState(number_of_like);
+  const [dislikes, setDislikes] = useState(number_of_dislike);
+  const [action, setAction] = useState(my_action);
 
   const like = () => {
-    setLikes(1);
-    setDislikes(0);
-    setAction('liked');
+    if (action === "liked") {
+      setLikes(likes-1);
+      setDislikes(dislikes);
+      setAction(null);
+    }
+    else if(action === "disliked"){
+      setLikes(likes+1);
+      setDislikes(dislikes-1);
+      setAction('liked');
+    }
+    else{
+      setLikes(likes+1);
+      setDislikes(dislikes);
+      setAction('liked');
+    }
+    //TODO 更新my_action，我的点踩信息到服务器
   };
 
   const dislike = () => {
-    setLikes(0);
-    setDislikes(1);
-    setAction('disliked');
+    if (action === "disliked") {
+      setLikes(likes);
+      setDislikes(dislikes-1);
+      setAction(null);
+    }
+    else if(action === "liked"){
+      setLikes(likes-1);
+      setDislikes(dislikes+1);
+      setAction('disliked');
+    }
+    else{
+      setLikes(likes);
+      setDislikes(dislikes);
+      setAction('disliked');
+    }
+
   };
 
   const actions = [
@@ -42,23 +71,22 @@ const CommentItem = () => {
   return (
     <Comment
       actions={actions}
-      author={<a>Han Solo</a>}
+      author={username}
       avatar={
         <Avatar
-          src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-          alt="Han Solo"
+          // src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+          src={avatar}
+          alt={username}
         />
       }
       content={
         <p>
-          We supply a series of design principles, practical patterns and high quality design
-          resources (Sketch and Axure), to help people create their product prototypes beautifully
-          and efficiently.
-              </p>
+          {comment}
+        </p>
       }
       datetime={
-        <Tooltip title={moment().format('YYYY-MM-DD HH:mm:ss')}>
-          <span>{moment().fromNow()}</span>
+        <Tooltip title={moment(created_time).format('YYYY-MM-DD HH:mm:ss')}>
+          <span>{moment(created_time).fromNow()}</span>
         </Tooltip>
       }
     />

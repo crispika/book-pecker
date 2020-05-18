@@ -1,45 +1,34 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Card, notification } from 'antd';
-import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Card } from 'antd';
+import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import "react-router-dom";
 
-import { pale_olive,  light_aoi} from "../../assets/color"
-import { getTrolley, updateTrolley } from '../../utils/localstorage';
 import { connect } from 'react-redux';
 import { deleteBook } from "../../redux/actions.js"
+import {addToCart} from "../../utils/handleEvent"
 
 
 const { Meta } = Card;
 
 class BookItem extends Component {
 
-    // 添加书进购物车
-    addToCart = (id, bookname) => {
-        // TODO 发送请求给服务器
+    // 添加书进购物车 - 从util中复用
+    // addToCart = (id, bookname) => {
 
-        // 存入localstorage
-        let trolleyDB = getTrolley() || {};
-        trolleyDB[id] = bookname;
-        updateTrolley(trolleyDB);
+    //     // 存入localstorage
+    //     let trolleyDB = getTrolley() || {};
+    //     trolleyDB[id] = bookname;
+    //     updateTrolley(trolleyDB);
 
-        // 弹出确认加入购物车的对话框
-        notification.open({
-            message: '加入购物车成功！',
-            description:
-                `${bookname}已经加入购物车。`,
-            icon: <CheckCircleOutlined style={{ color: pale_olive }} />,
-            style: {
-                backgroundColor: light_aoi,
-            },
-        });
+    //     // 弹出确认加入购物车的对话框
+    //     notifySuccess('加入购物车成功！',`${bookname}已经加入购物车。`)
 
-        //  从书的列表中移除
-        // this.props.pickBook(id);
-        this.props.deleteBook(id);
+    //     //  从书的列表中移除
+    //     // this.props.deleteBook(id);
 
-    }
+    // }
 
     render() {
         const { bookname, description, url, id } = this.props.book_info;
@@ -68,7 +57,7 @@ class BookItem extends Component {
                 }
                 actions={[
                     <StarOutlined key="wish" />,
-                    <ShoppingCartOutlined key="trolley" onClick={this.addToCart.bind(this, id, bookname)} />,
+                    <ShoppingCartOutlined key="trolley" onClick={addToCart.bind(this, id, bookname)} />,
                     <ShareAltOutlined key="share" />,
                 ]}
             >
@@ -86,7 +75,6 @@ class BookItem extends Component {
 
 BookItem.propTypes = {
     book_info: PropTypes.object.isRequired,
-    // pickBook: PropTypes.func.isRequired, //纯react版本传参
     deleteBook: PropTypes.func.isRequired,
 }
 

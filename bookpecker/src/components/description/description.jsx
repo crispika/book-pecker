@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Card, Descriptions, Rate } from "antd";
-import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Card, Descriptions, Rate, List } from "antd";
+import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined} from '@ant-design/icons';
 import { connect } from "react-redux";
 import { PropTypes } from "prop-types";
 
@@ -8,6 +8,7 @@ import { light_grey } from "../../assets/color";
 import GradeSpread from '../grade-spread';
 import CommentItem from '../comment-item';
 import { getBookInfo, getBookComments } from "../../redux/actions";
+import {addToCart} from "../../utils/handleEvent"
 
 
 class Description extends Component {
@@ -18,8 +19,8 @@ class Description extends Component {
     }
 
     componentDidMount() {
-        this.props.getBookInfo();
-        this.props.getBookComments();
+        this.props.getBookInfo(this.props.match.params.id);
+        this.props.getBookComments(this.props.match.params.id);
     }
 
     render() {
@@ -70,7 +71,7 @@ class Description extends Component {
                             }
                             actions={[
                                 <StarOutlined key="wish" />,
-                                <ShoppingCartOutlined key="trolley" />,
+                                <ShoppingCartOutlined key="trolley" onClick={addToCart.bind(this,book_info.id,book_info.bookname)} />,
                                 <ShareAltOutlined key="share" />,
                             ]}
                         >
@@ -110,7 +111,7 @@ class Description extends Component {
                             </div>
                             <div className="grade-spread-wrapper" style={{ height: 150, marginTop: 10, display: "flex", flexDirection: "column", }}>
                                 {book_info.grade_spread.map(
-                                    (grade,index)=><GradeSpread key={index} grade={grade}/>
+                                    (grade, index) => <GradeSpread key={index} grade={grade} />
                                 )}
                             </div>
                         </Card>
@@ -123,23 +124,27 @@ class Description extends Component {
                         title="书籍简介"
                         style={{ width: 980, backgroundColor: light_grey, borderBottom: 0 }}
                     >
-                        <div dangerouslySetInnerHTML = {{ __html:book_info.description }}></div>
+                        <div dangerouslySetInnerHTML={{ __html: book_info.description }}></div>
                     </Card>
                 )}
 
                 {/* 书籍评论，条件渲染 */}
                 {book_comments && (
                     <Card
-                        title="书籍评论"
+                        title={`${book_comments.length}条书籍评论`}
                         style={{ width: 980, backgroundColor: light_grey }}
-                    // bodyStyle={{backgroundColor:light_aoi}} 
-                    // bordered={false}
                     >
-                        {book_comments.map(
-                            (comment,index) => <CommentItem key={index} comment={comment}/>
-                        )}
-                        
+                        <List
+                            itemLayout="horizontal"
+                            dataSource={book_comments}
+                            renderItem={comment => (
+                                <li>
+                                    <CommentItem comment={comment} />
+                                </li>
+                            )}
+                        />
                     </Card>
+
                 )}
             </div>
         )
