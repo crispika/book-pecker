@@ -1,14 +1,6 @@
 import React, { useState } from 'react';
-import {Link} from "react-router-dom"
-import {
-    Form,
-    Input,
-    Tooltip,
-    Select,
-    Row,
-    Col,
-    Button,
-} from 'antd';
+import { Link } from "react-router-dom"
+import { Form, Input, Tooltip, Select, Row, Col, Button, } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import "./register.less"
 
@@ -18,25 +10,26 @@ const { Option } = Select;
 
 const prefixSelector = (
     <Form.Item name="prefix" noStyle>
-      <Select
-        style={{
-          width: 70,
-        }}
-      >
-        <Option value="86">+86</Option>
-        <Option value="61">+61</Option>
-      </Select>
+        <Select
+            style={{
+                width: 70,
+            }}
+        >
+            <Option value="86">+86</Option>
+            <Option value="61">+61</Option>
+        </Select>
     </Form.Item>
-  );
+);
 
 const Register = () => {
     const [form] = Form.useForm();
 
+    //TODO 提交表单回调
     const onFinish = values => {
         console.log('Received values of form: ', values);
     };
 
-    // const [autoCompleteResult, setAutoCompleteResult] = useState([]);
+
 
     const formItemLayout = {
         labelCol: { xs: { span: 24, }, sm: { span: 8, }, },
@@ -60,7 +53,7 @@ const Register = () => {
                 name="register"
                 onFinish={onFinish}
                 scrollToFirstError
-                initialValues={{prefix: '86'}}
+                initialValues={{ prefix: '86' }}
             >
                 <Form.Item
                     name="nickname"
@@ -75,9 +68,18 @@ const Register = () => {
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your nickname!',
-                            whitespace: true,
+                            message: '请输入您的昵称！',
+
                         },
+                        {
+                            min: 2,
+                            max: 10,
+                            message: "用户名长度仅限于2-10位。"
+                        },
+                        {
+                            pattern: /([\u4e00-\u9fa5]|[\w]|[_])+$/,
+                            message: "用户名长度仅能由汉字、字母、数字或下划线组成"
+                        }
                     ]}
                 >
                     <Input />
@@ -89,12 +91,10 @@ const Register = () => {
                     rules={[
                         {
                             type: 'email',
+                            whitespace: true,
                             message: 'Email地址不合法!',
                         },
-                        {
-                            required: true,
-                            message: '请输入email地址',
-                        },
+                        { required: true, message: '请输入email地址！' },
                     ]}
                 >
                     <Input />
@@ -104,10 +104,17 @@ const Register = () => {
                     name="password"
                     label="密码"
                     rules={[
+                        { required: true, message: '请输入密码！' },
+                        // 密码验证规则
                         {
-                            required: true,
-                            message: '请输入密码!',
+                            min: 6,
+                            max: 20,
+                            message: "密码长度仅限于6-20位。",
                         },
+                        {
+                            pattern: /^[\w_]+$/,
+                            message: "密码仅允许由字母，数字与下划线组成。"
+                        }
                     ]}
                     hasFeedback
                 >
@@ -179,7 +186,7 @@ const Register = () => {
                 </Form.Item>
 
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" style={{fontSize:16,height:"100%"}}>
+                    <Button type="primary" htmlType="submit" style={{ fontSize: 16, height: "100%" }}>
                         注册
                     </Button>
                     &nbsp;&nbsp;或&nbsp;

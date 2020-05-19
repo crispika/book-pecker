@@ -2,20 +2,37 @@ import React, { Component } from 'react'
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import "./login.less"
-import {Link} from "react-router-dom"
-import {notifyFailure} from "../../utils/notification"
+import { Link } from "react-router-dom"
+import { notifyFailure } from "../../utils/notification"
+import cookie from 'react-cookies'
 
 
-export default class Login extends Component {
+// const Login = () => {
+class Login extends Component {
+    constructor(props) {
+        super(props);
+        console.log(props)
+        this.state = {
+            isRemembered: cookie.load('isRemembered') || false
+        }
+    }
 
+    // const onFinish = (values) => {
     onFinish = (values) => {
-        console.log('Received values of form: ',values);
-        const {email,password,remember} = values
-        //TODO 发送ajax请求数据
+        console.log('Received values of form: ', values);
+        const { email, password, remember } = values
+        //TODO redux发送ajax请求数据
 
         //TODO 成功，返回主页; 错误，弹出Notification
-        notifyFailure("遇到电波错误","登录失败(ಥ_ಥ)，请稍后再试。") 
-      };
+        notifyFailure("遇到电波错误", "登录失败(ಥ_ಥ)，请稍后再试。")
+    };
+
+    handleRememberPwd = (e) => {
+        console.log(e)
+        // const value = e.target.name === 'isGoing' ? target.checked : target.value;
+        // console.log(value)
+
+    };
 
 
     render() {
@@ -29,7 +46,9 @@ export default class Login extends Component {
                         remember: true,
                     }}
                     // 提交表单且数据验证成功后的回调
+                    // onFinish={onFinish}
                     onFinish={this.onFinish}
+                    initialValues={{ "email": "123@gmail.com", "password": "123456" }}
                 >
                     <Form.Item
                         className="form-item"
@@ -66,9 +85,9 @@ export default class Login extends Component {
                     </Form.Item>
 
                     {/* XXX 表单项样式未设置好,无法调整form.item的样式 */}
-                    <Form.Item className="form-item" style={{display:"flex",justifyContent:"space-between"}}>
+                    <Form.Item className="form-item" style={{ display: "flex", justifyContent: "space-between" }}>
                         <Form.Item name="remember" valuePropName="checked" noStyle>
-                            <Checkbox>记住我</Checkbox>
+                            <Checkbox name="isRemembered" checked={this.state.isRemembered} onChange={this.handleRememberPwd}>记住我</Checkbox>
                         </Form.Item>
 
                         <a className="login-form-forgot" href="#">
@@ -87,3 +106,5 @@ export default class Login extends Component {
         )
     }
 }
+
+export default Login

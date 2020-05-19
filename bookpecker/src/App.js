@@ -18,6 +18,8 @@ const { Content, Footer } = Layout;
 
 export default class App extends Component {
 
+
+
     render() {
         return (
             <div>
@@ -28,8 +30,8 @@ export default class App extends Component {
                         <Switch>
                             <Route path='/books' component={BookList} />
                             <Route path='/trolley' component={Trolley}/>
-                            <Route path='/login' component={Login}/>
                             <Route path="/register" component={Register}/>
+                            <Route path='/login' component={Login}/>
                             <Route path='/user' component={User}/>
                             <Route path="/description/:id" component={Description}/>
                             <Redirect to='/books' />
