@@ -25,7 +25,7 @@ export default class MyHeader extends Component {
 
     render() {
         //XXX just for test
-        const isLogin = true;
+        const isLogin = false;
         // const isLogin = useLoginStatus();
         return (
             <Header style={{ backgroundColor: header_bg_color }} className="header">
@@ -51,7 +51,7 @@ export default class MyHeader extends Component {
                     </Menu.Item>)}
                 </Menu>
                 {isLogin &&
-                    <div className="logOut" onClick={this.handleLogout}>登出</div>}
+                    <div className="logout" onClick={this.handleLogout}>登出</div>}
             </Header>
         )
     }
