@@ -25,7 +25,7 @@ export default class App extends Component {
             <div>
                 <Layout>
                     <MyHeader />
-                    <Content className="content" style={{ backgroundColor: content_bg_color}}>
+                    <Content className="content" style={{ backgroundColor: content_bg_color,minHeight:800}}>
                         {/* 切换路由组件 */}
                         <Switch>
                             <Route path='/books' component={BookList} />

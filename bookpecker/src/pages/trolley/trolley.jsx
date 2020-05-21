@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { useContext, useState, useEffect, useRef } from 'react';
-import { Table, Input, Popconfirm, Form } from 'antd';
+import { Table, Input, Popconfirm, Form, Typography, Button } from 'antd';
+import {EditOutlined} from '@ant-design/icons'
 import { content_bg_color } from "../../assets/color"
+
+const { Text } = Typography;
 
 const EditableContext = React.createContext();
 
@@ -24,66 +27,73 @@ const EditableCell = ({
     record,
     handleSave,
     ...restProps
-    }) => {
-        const [editing, setEditing] = useState(false);
-        const inputRef = useRef();
-        const form = useContext(EditableContext);
-        useEffect(() => {
-            if (editing) {
-                inputRef.current.focus();
-            }
-        }, [editing]);
-
-        const toggleEdit = () => {
-            setEditing(!editing);
-            form.setFieldsValue({
-                [dataIndex]: record[dataIndex],
-        });
-        };
-
-        const save = async e => {
-            try {
-                const values = await form.validateFields();
-                toggleEdit();
-                handleSave({ ...record, ...values });
-            } catch (errInfo) {
-                console.log('Save failed:', errInfo);
-            }
-        };
-
-        let childNode = children;
-
-        if (editable) {
-            childNode = editing ? (
-                <Form.Item
-                    style={{
-                        margin: 0,
-                    }}
-                    name={dataIndex}
-                    rules={[
-                        {
-                            required: true,
-                            message: `${title} is required.`,
-                        },
-                    ]}
-                >
-                    <Input ref={inputRef} onPressEnter={save} onBlur={save} />
-                </Form.Item>
-            ) : (
-                    <div
-                        className="editable-cell-value-wrap"
-                        style={{
-                            paddingRight: 24,
-                        }}
-                        onClick={toggleEdit}
-                    >
-                        {children}
-                    </div>
-                );
+}) => {
+    const [editing, setEditing] = useState(false);
+    const inputRef = useRef();
+    const form = useContext(EditableContext);
+    useEffect(() => {
+        if (editing) {
+            inputRef.current.focus();
         }
+    }, [editing]);
 
-        return <td {...restProps}>{childNode}</td>;
-        };
+    const toggleEdit = () => {
+        setEditing(!editing);
+        form.setFieldsValue({
+            [dataIndex]: record[dataIndex],
+        });
+    };
+
+    const save = async e => {
+        try {
+            const values = await form.validateFields();
+            toggleEdit();
+            handleSave({ ...record, ...values });
+        } catch (errInfo) {
+            console.log('Save failed:', errInfo);
+        }
+    };
+
+    let childNode = children;
+
+    if (editable) {
+        childNode = editing ? (
+            <Form.Item
+                style={{
+                    margin: 0,
+                }}
+                name={dataIndex}
+                rules={[
+                    {
+                        required: true,
+                        message: `必须填写${title}.`,
+                    },
+                    {
+                        // 验证qty的规则必须是0-100内的正整数
+                        pattern: /^[1-9][0-9]{0,1}$/,
+                        message: "限购99本，请输入正确的数量。"
+                    }
+                ]}
+            >
+                <Input ref={inputRef} onPressEnter={save} onBlur={save} style={{width:"50%"}} />
+            </Form.Item>
+
+        ) : (
+                <div
+                    className="editable-cell-value-wrap"
+                    style={{
+                        paddingRight: 24,
+                    }}
+                    onClick={toggleEdit}
+                >
+                    {children}
+                </div>
+            );
+    }
+
+    return <td {...restProps}>{childNode}</td>;
+};
+
 
 
 export default class Trolley extends Component {
@@ -93,33 +103,55 @@ export default class Trolley extends Component {
             {
                 title: "封面",
                 dataIndex: 'cover',
-                width: '30%',
+                width: '15%',
+                render: (url) =>
+                    // <div style={{
+                    // background: `url(${url}) no-repeat center`,
+                    // backgroundSize: 'contain',
+                    // width: "100px",
+                    // heigh: "150px",
+                    // }}/>,
+                    <img src={url} style={{ height: 100 }} />,
             },
             {
                 title: "书籍名称",
                 dataIndex: 'bookname',
             },
             {
+                title: "作者",
+                dataIndex: 'author',
+                width: '12%',
+            },
+            {
                 title: "价格",
                 dataIndex: 'price',
-                width: '12%',
+                width: '8%',
             },
             {
                 title: "数量",
                 dataIndex: 'qty',
-                width: '12%',
+                width: '8%',
                 editable: true,
+                render: (text) =>(
+                    <div style={{width:"50%", display:"flex",justifyContent:"space-between"}}>
+                        <Text>{text}&nbsp;&nbsp;</Text>
+                        <EditOutlined style={{marginTop:3}}/>
+                    </div>
+                )
             },
             {
-                title: "总价",
-                dataIndex: 'total_price',
+                title: "小计",
+                dataIndex: 'subtotal',
                 width: '12%',
+                // record是第二个传入的参数，要调取必须申明text
+                render: (text,record) => (<Text>{record.price*record.qty}</Text>)
             },
             {
-                title: 'operation',
-                dataIndex: 'operation',
-                width: '20%',
+                title: '',
+                dataIndex: 'delete',
+                width: '8%',
                 render: (text, record) =>
+                    // 此处的record指这一行的数据对象
                     this.state.dataSource.length >= 1 ? (
                         <Popconfirm title="确认删除吗?" onConfirm={() => this.handleDelete(record.key)}>
                             <a>删除</a>
@@ -131,20 +163,37 @@ export default class Trolley extends Component {
         this.state = {
             dataSource: [
                 {
+                    key: "1",
                     cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
-                    bookname: 'Edward King',
+                    bookname: 'I have a dream',
+                    author: "Edward King",
                     price: 32.00,
                     qty: 1,
-                    total_price: 0,
+                    subtotal: 0,
+                    selected: false,
+                },
+                {
+                    key: "2",
+                    cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
+                    bookname: 'I have another dream',
+                    author: "Edward King",
+                    price: 16.00,
+                    qty: 2,
+                    subtotal: 0,
+                    selected: false,
                 },
             ],
-            count: 1,
+            count: 2, //例子中带着，不确定有没有用
+            // 用于存储表格中用户选中的row所对应data的key
+            keySelected:[],
+
         };
     }
 
     handleDelete = key => {
         const dataSource = [...this.state.dataSource];
         this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+        //TODO 发送删除state并发送给服务器 | 删除localstorage
     };
 
     handleSave = row => {
@@ -155,6 +204,34 @@ export default class Trolley extends Component {
         this.setState({
             dataSource: newData,
         });
+    };
+
+    // 表格每行checkbox的事件回调
+    /**
+     * @param selectedRowkeys: 所有选中的行的key
+     * @param selectedRows: 所有选中行的数据对象列表
+     * @param record: 所选中行的数据对象
+     * @param selected: boolean, 是否选中
+     */
+    rowSelection = {
+        onChange: (selectedRowKeys, selectedRows) => {
+            // console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+        },
+        onSelect: (record, selected, selectedRows) => {
+            // console.log(record, selected, selectedRows);
+            let {keySelected} = this.state;
+            if(selected){
+                keySelected.push(record.key);
+                this.setState({keySelected})
+            }else{
+                this.setState({keySelected: keySelected.filter((key)=> key !== record.key)})
+            }
+            console.log(this.state.keySelected)
+        },
+        onSelectAll: (selected, selectedRows, changeRows) => {
+            // console.log(selected, selectedRows, changeRows);
+            this.setState({keySelected : selectedRows.map(record => record.key)})
+        },
     };
 
     render() {
@@ -182,18 +259,41 @@ export default class Trolley extends Component {
         });
 
         return (
+            <Table
+                style={{
+                    width: 1470,
+                    margin: "20px auto"
+                }}
+                rowSelection={this.rowSelection} //每行checkbox的点击事件
+                pagination={false} //取消分页器
+                components={components}
+                // rowClassName={() => 'editable-row'}
+                bordered={false}
+                dataSource={dataSource}
+                columns={columns}
+                // 总计条的逻辑
+                summary={table_data => {
+                    let total_price = 0;
+                    const selected_data = table_data.filter(record => this.state.keySelected.includes(record.key));
+                    // console.log(selected_data)
+                    selected_data.forEach(({ qty, price }) => {
+                        total_price += qty * price;
+                    })
 
-            <div className="trolley-wrapper" style={{ backgroundColor: content_bg_color }}>
-                <Table
-                    className="trolley-table"
-
-                    components={components}
-                    rowClassName={() => 'editable-row'}
-                    bordered
-                    dataSource={dataSource}
-                    columns={columns}
-                />
-            </div>
+                    return (
+                        <Table.Summary.Row>
+                            <Table.Summary.Cell index={0}></Table.Summary.Cell>
+                            <Table.Summary.Cell index={1} colSpan={4}>总计</Table.Summary.Cell>
+                            <Table.Summary.Cell index={3}>
+                                <Text type="warning" style={{ fontSize: 18 }}>{total_price}</Text>
+                            </Table.Summary.Cell>
+                            <Table.Summary.Cell index={4} colSpan={3}>
+                                <Button type="primary" style={{ width: "80%", height: "100%", fontSize: 16 }}>购买</Button>
+                            </Table.Summary.Cell>
+                        </Table.Summary.Row>
+                    )
+                }}
+            />
         )
     }
 }
