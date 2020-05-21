@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Popconfirm, Form, Typography, Button } from 'antd';
 import {EditOutlined} from '@ant-design/icons'
 import { content_bg_color } from "../../assets/color"
+import {getTrolleyList}from "../../redux/actions.js"
 
 const { Text } = Typography;
 
@@ -96,7 +99,7 @@ const EditableCell = ({
 
 
 
-export default class Trolley extends Component {
+class Trolley extends Component {
     constructor(props) {
         super(props);
         this.columns = [
@@ -116,11 +119,12 @@ export default class Trolley extends Component {
             {
                 title: "书籍名称",
                 dataIndex: 'bookname',
+                width: '18%',
             },
             {
                 title: "作者",
                 dataIndex: 'author',
-                width: '12%',
+                
             },
             {
                 title: "价格",
@@ -152,41 +156,42 @@ export default class Trolley extends Component {
                 width: '8%',
                 render: (text, record) =>
                     // 此处的record指这一行的数据对象
-                    this.state.dataSource.length >= 1 ? (
+                    // this.state.dataSource.length >= 1 ? (
+                    this.props.dataSource.length >= 1 ? (
                         <Popconfirm title="确认删除吗?" onConfirm={() => this.handleDelete(record.key)}>
                             <a>删除</a>
                         </Popconfirm>
                     ) : null,
             },
         ]
+        
+        this.props.getTrolleyList();
 
         this.state = {
-            dataSource: [
-                {
-                    key: "1",
-                    cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
-                    bookname: 'I have a dream',
-                    author: "Edward King",
-                    price: 32.00,
-                    qty: 1,
-                    subtotal: 0,
-                    selected: false,
-                },
-                {
-                    key: "2",
-                    cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
-                    bookname: 'I have another dream',
-                    author: "Edward King",
-                    price: 16.00,
-                    qty: 2,
-                    subtotal: 0,
-                    selected: false,
-                },
-            ],
+            // dataSource: [
+            //     {
+            //         key: "1",
+            //         cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
+            //         bookname: 'I have a dream',
+            //         author: "Edward King",
+            //         price: 32.00,
+            //         qty: 1,
+            //         subtotal: 0,
+
+            //     },
+            //     {
+            //         key: "2",
+            //         cover: "http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png",
+            //         bookname: 'I have another dream',
+            //         author: "Edward King",
+            //         price: 16.00,
+            //         qty: 2,
+            //         subtotal: 0,
+            //     },
+            // ],
             count: 2, //例子中带着，不确定有没有用
             // 用于存储表格中用户选中的row所对应data的key
             keySelected:[],
-
         };
     }
 
@@ -235,7 +240,9 @@ export default class Trolley extends Component {
     };
 
     render() {
-        const { dataSource } = this.state;
+        console.log(this.props.dataSource)
+        // const { dataSource } = this.state;
+        const { dataSource } = this.props;
         const components = {
             body: {
                 row: EditableRow,
@@ -297,3 +304,14 @@ export default class Trolley extends Component {
         )
     }
 }
+
+Trolley.propTypes = {
+    getTrolleyList: PropTypes.func.isRequired,
+    dataSource: PropTypes.array.isRequired,
+}
+
+
+export default connect(
+    state => ({dataSource: state.trolley_data}),
+    {getTrolleyList}
+)(Trolley)

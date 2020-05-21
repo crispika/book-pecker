@@ -31,7 +31,7 @@ class BookItem extends Component {
     // }
 
     render() {
-        const { bookname, description, url, id } = this.props.book_info;
+        const { bookname, short_intro, cover, id } = this.props.book_info;
         return (
             <Card
                 hoverable
@@ -43,7 +43,7 @@ class BookItem extends Component {
                     <div style={{
                         width: '100%',
                         height: '200px',
-                        background: `url(${url}) no-repeat center`,
+                        background: `url(${cover}) no-repeat center`,
                         backgroundSize: 'contain'
                     }}></div>
                         {/* <img
@@ -51,7 +51,7 @@ class BookItem extends Component {
                             alt="book-cover"
                             // src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                             // src="http://huaxia.com/zhwh/yd/images/2018/09/18/2097945.png"
-                            src={url}
+                            src={cover}
                         /> */}
                     </Link>
                 }
@@ -64,7 +64,7 @@ class BookItem extends Component {
                 <Link to={`/description/${id}`} >
                 <Meta
                     title={bookname}
-                    description={description}
+                    description={short_intro}
                 />
                 </Link>
             </Card>

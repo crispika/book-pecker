@@ -2,22 +2,22 @@
  * 复用事件回调函数
  */
 
-import {notifySuccess} from "./notification"
-import { getTrolley, updateTrolley } from './localstorage';
+import { notifySuccess } from "./notification"
+import { db_insert_trolley } from './localDb';
+import { TROLLEY } from "./db-types"
 
- export const addToCart = (id,bookname) =>{
+export const addToCart = (id, bookname) => {
 
-        // TODO 发送请求给服务器
+       // TODO dispatch 发送请求给服务器
 
-        // 存入localstorage
-        let trolleyDB = getTrolley() || {};
-        trolleyDB[id] = bookname;
-        updateTrolley(trolleyDB);
+       // 存入localstorage
+       console.log("-------: "+ id)
+       db_insert_trolley(TROLLEY,id)
 
-        // 弹出确认加入购物车的对话框
-        notifySuccess('加入购物车成功！',`${bookname}已经加入购物车。`)
+       // 弹出确认加入购物车的对话框
+       notifySuccess('加入购物车成功！', `${bookname}已经加入购物车。`)
 
-        //  从书的列表中移除
-        // this.props.deleteBook(id);
+       //  从书的列表中移除
+       // this.props.deleteBook(id);
 
- }
+}

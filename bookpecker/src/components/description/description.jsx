@@ -92,7 +92,7 @@ class Description extends Component {
                                 <Descriptions.Item label="出版社">{book_info.press}</Descriptions.Item>
                                 <Descriptions.Item label="出版年份">{book_info.publish_year}</Descriptions.Item>
                                 <Descriptions.Item label="页数">{book_info.number_of_pages}</Descriptions.Item>
-                                <Descriptions.Item label="价格">{book_info.price}</Descriptions.Item>
+                                <Descriptions.Item label="价格">￥ {book_info.price}</Descriptions.Item>
                                 <Descriptions.Item label="ISBN">{book_info.ISBN}</Descriptions.Item>
                             </Descriptions>
                         </Card>
