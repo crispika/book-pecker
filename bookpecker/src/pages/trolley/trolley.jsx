@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Popconfirm, Form, Typography, Button } from 'antd';
-import {EditOutlined} from '@ant-design/icons'
+import { EditOutlined } from '@ant-design/icons'
 import { content_bg_color } from "../../assets/color"
-import {getTrolleyList}from "../../redux/actions.js"
+import { getTrolleyList, updateTrolleyData } from "../../redux/actions.js"
+import { calSubtotal, formatMoney } from "../../utils/money-calculator"
 
 const { Text } = Typography;
 
@@ -78,7 +79,7 @@ const EditableCell = ({
                     }
                 ]}
             >
-                <Input ref={inputRef} onPressEnter={save} onBlur={save} style={{width:"50%"}} />
+                <Input ref={inputRef} onPressEnter={save} onBlur={save} style={{ width: "50%" }} />
             </Form.Item>
 
         ) : (
@@ -107,14 +108,14 @@ class Trolley extends Component {
                 title: "封面",
                 dataIndex: 'cover',
                 width: '15%',
-                render: (url) =>
+                render: (url) =>this.props.dataSource.length >= 1?
                     // <div style={{
                     // background: `url(${url}) no-repeat center`,
                     // backgroundSize: 'contain',
                     // width: "100px",
                     // heigh: "150px",
                     // }}/>,
-                    <img src={url} style={{ height: 100 }} />,
+                    (<img src={url} style={{ height: 100 }} />):null,
             },
             {
                 title: "书籍名称",
@@ -124,31 +125,36 @@ class Trolley extends Component {
             {
                 title: "作者",
                 dataIndex: 'author',
-                
+
             },
             {
                 title: "价格",
                 dataIndex: 'price',
                 width: '8%',
+                render: (text) => this.props.dataSource.length >= 1?(
+                    <Text>{formatMoney(text, "2", "￥")}</Text>
+                ):null
             },
             {
                 title: "数量",
                 dataIndex: 'qty',
                 width: '8%',
                 editable: true,
-                render: (text) =>(
-                    <div style={{width:"50%", display:"flex",justifyContent:"space-between"}}>
+                render: (text) => this.props.dataSource.length >= 1 ?(
+                    <div style={{ width: "50%", display: "flex", justifyContent: "space-between" }}>
                         <Text>{text}&nbsp;&nbsp;</Text>
-                        <EditOutlined style={{marginTop:3}}/>
+                        <EditOutlined style={{ marginTop: 3 }} />
                     </div>
-                )
+                ):null,
             },
             {
                 title: "小计",
                 dataIndex: 'subtotal',
                 width: '12%',
                 // record是第二个传入的参数，要调取必须申明text
-                render: (text,record) => (<Text>{record.price*record.qty}</Text>)
+                render: (text, record) => this.props.dataSource.length >= 1 ? (
+                <Text>{formatMoney(calSubtotal(record.qty,record.price),"2","￥")}</Text>
+                ): null,
             },
             {
                 title: '',
@@ -164,8 +170,6 @@ class Trolley extends Component {
                     ) : null,
             },
         ]
-        
-        this.props.getTrolleyList();
 
         this.state = {
             // dataSource: [
@@ -191,24 +195,34 @@ class Trolley extends Component {
             // ],
             count: 2, //例子中带着，不确定有没有用
             // 用于存储表格中用户选中的row所对应data的key
-            keySelected:[],
+            keySelected: [],
         };
+        // this.props.getTrolleyList();
     }
 
+    componentDidMount(){
+        this.props.getTrolleyList();
+    }
+    
+
     handleDelete = key => {
-        const dataSource = [...this.state.dataSource];
-        this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+        const dataSource = [...this.props.dataSource];
+        // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+        const newData = dataSource.filter(item => item.key !== key)
         //TODO 发送删除state并发送给服务器 | 删除localstorage
+
     };
 
     handleSave = row => {
-        const newData = [...this.state.dataSource];
+        const newData = [...this.props.dataSource];
         const index = newData.findIndex(item => row.key === item.key);
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
-        this.setState({
-            dataSource: newData,
-        });
+        // this.setState({
+        //     dataSource: newData,
+        // }); 
+        updateTrolleyData(newData);
+        console.log("updated")
     };
 
     // 表格每行checkbox的事件回调
@@ -224,24 +238,25 @@ class Trolley extends Component {
         },
         onSelect: (record, selected, selectedRows) => {
             // console.log(record, selected, selectedRows);
-            let {keySelected} = this.state;
-            if(selected){
+            let { keySelected } = this.state;
+            if (selected) {
                 keySelected.push(record.key);
-                this.setState({keySelected})
-            }else{
-                this.setState({keySelected: keySelected.filter((key)=> key !== record.key)})
+                this.setState({ keySelected })
+            } else {
+                this.setState({ keySelected: keySelected.filter((key) => key !== record.key) })
             }
             console.log(this.state.keySelected)
         },
         onSelectAll: (selected, selectedRows, changeRows) => {
             // console.log(selected, selectedRows, changeRows);
-            this.setState({keySelected : selectedRows.map(record => record.key)})
+            this.setState({ keySelected: selectedRows.map(record => record.key) })
         },
     };
 
     render() {
-        console.log(this.props.dataSource)
+        console.log("trolley rendered")
         // const { dataSource } = this.state;
+        // console.log(this.props.dataSource)
         const { dataSource } = this.props;
         const components = {
             body: {
@@ -284,7 +299,7 @@ class Trolley extends Component {
                     const selected_data = table_data.filter(record => this.state.keySelected.includes(record.key));
                     // console.log(selected_data)
                     selected_data.forEach(({ qty, price }) => {
-                        total_price += qty * price;
+                        total_price += calSubtotal(qty,price);
                     })
 
                     return (
@@ -292,7 +307,7 @@ class Trolley extends Component {
                             <Table.Summary.Cell index={0}></Table.Summary.Cell>
                             <Table.Summary.Cell index={1} colSpan={4}>总计</Table.Summary.Cell>
                             <Table.Summary.Cell index={3}>
-                                <Text type="warning" style={{ fontSize: 18 }}>{total_price}</Text>
+                                <Text type="warning" style={{ fontSize: 18 }}>{formatMoney(total_price,"2","￥")}</Text>
                             </Table.Summary.Cell>
                             <Table.Summary.Cell index={4} colSpan={3}>
                                 <Button type="primary" style={{ width: "80%", height: "100%", fontSize: 16 }}>购买</Button>
@@ -307,11 +322,12 @@ class Trolley extends Component {
 
 Trolley.propTypes = {
     getTrolleyList: PropTypes.func.isRequired,
+    updateTrolleyData: PropTypes.func.isRequired,
     dataSource: PropTypes.array.isRequired,
 }
 
 
 export default connect(
-    state => ({dataSource: state.trolley_data}),
-    {getTrolleyList}
+    state => ({ dataSource: state.trolley_data }),
+    { getTrolleyList, updateTrolleyData},
 )(Trolley)

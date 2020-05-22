@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA } from "./action-types"
+import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA } from "./action-types"
 
 function book_list(state = [], action) {
     switch (action.type) {
@@ -28,6 +28,9 @@ function book_description(state = {}, action) {
 function trolley_data(state =[], action){
     switch(action.type){
         case RECEIVE_TROLLEYDATA:
+            return action.data;
+        case UPDATE_TROLLEYDATA:
+            console.log("updating...");
             return action.data;
         default:
             return state;

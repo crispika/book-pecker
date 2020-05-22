@@ -56,3 +56,4 @@ export function db_insert_trolley(table_name,key){
     else table[key] = 1;
     db[table_name] = JSON.stringify(table)
 }
+

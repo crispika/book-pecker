@@ -1,8 +1,8 @@
-import { DELETE_BOOK, RECEIVE_BOOKLIST, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA } from "./action-types";
+import { DELETE_BOOK, RECEIVE_BOOKLIST, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA } from "./action-types";
 // for test
 import UUID from "node-uuid";
-import {db_init_table,db_insert_tableMapItem,db_select_table,db_select_MapItem} from "../utils/localDb"
-import {BOOKINFO,TROLLEY} from "../utils/db-types"
+import { db_init_table, db_insert_tableMapItem, db_select_table, db_select_MapItem } from "../utils/localDb"
+import { BOOKINFO, TROLLEY } from "../utils/db-types"
 import bookList from "../pages/book-list/book-list";
 import bookItem from "../pages/book-item/book-item";
 
@@ -16,7 +16,7 @@ export const getBookList = () => {
                 {
                     "bookname": "猫不存在",
                     "short_intro": "从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。",
-                    "cover":"https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
+                    "cover": "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
                     // "id": UUID.v1(),
                     "id": "book1",
                     "author": "[美] 厄休拉・勒古恩",
@@ -67,7 +67,7 @@ export const getBookList = () => {
                 {
                     "bookname": "猫不存在_v2",
                     "short_intro": "从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。",
-                    "cover":"https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
+                    "cover": "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
                     // "id": UUID.v1(),
                     "id": "book4",
                     "author": "[美] 厄休拉・勒古恩",
@@ -118,7 +118,7 @@ export const getBookList = () => {
                 {
                     "bookname": "猫不存在_v3",
                     "short_intro": "从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。",
-                    "cover":"https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
+                    "cover": "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
                     // "id": UUID.v1(),
                     "id": "book7",
                     "author": "[美] 厄休拉・勒古恩",
@@ -170,16 +170,16 @@ export const getBookList = () => {
 
             // 存入本地数据库，方便添加到购物车的数据沟通
             db_init_table(BOOKINFO);
-            book_data.forEach((book)=>{
+            book_data.forEach((book) => {
                 console.log(book);
-                db_insert_tableMapItem(BOOKINFO,book.id,book)
+                db_insert_tableMapItem(BOOKINFO, book.id, book)
             });
 
             // 模拟调用数据库
-            let book_list=[];
-            book_data.forEach( book => {
-                const {bookname,short_intro,id,cover} = book;
-                book_list.push({bookname,short_intro,id,cover});
+            let book_list = [];
+            book_data.forEach(book => {
+                const { bookname, short_intro, id, cover } = book;
+                book_list.push({ bookname, short_intro, id, cover });
             });
             dispatch(receiveBookList(book_list));
         }, 100);
@@ -234,8 +234,8 @@ export const getBookComments = (id) => {
         setTimeout(() => {
             const book_comments = {
                 book_comments: [
-                    { username: "Jack", comment: "you jump i jump", avatar:"https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33 ,my_action:"disliked",created_time:"20200208T080910"},
-                    { username: "Jack+20", comment: "you jump i will not jump with you", avatar:"https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333,my_action:"liked",created_time:"20200508T080910"},
+                    { username: "Jack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                    { username: "Jack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
                 ]
             }
             dispatch(receiveBookComments(book_comments));
@@ -248,6 +248,8 @@ const receiveBookComments = (book_comments) => ({
     data: book_comments,
 });
 
+/* 购物车页面的操作 */
+
 export const getTrolleyList = () => {
     return (dispatch) => {
         // 异步从服务器取数据
@@ -256,7 +258,7 @@ export const getTrolleyList = () => {
         const trolley_db = db_select_table(TROLLEY);
         const trolley_data = []
         Object.keys(trolley_db).forEach(key => {
-            let trolley_item = db_select_MapItem(BOOKINFO,key);
+            let trolley_item = db_select_MapItem(BOOKINFO, key);
             trolley_item.qty = trolley_db[key];
             trolley_item.key = key;
             trolley_data.push(trolley_item)
@@ -268,4 +270,22 @@ export const getTrolleyList = () => {
 const receiveTrolleyData = (trolley_data) => ({
     type: RECEIVE_TROLLEYDATA,
     data: trolley_data,
+});
+
+export const updateTrolleyData = (newData) => {
+    console.log('1111') //console 成功
+    
+    return dispatch => {
+        console.log(newData);   //console失败，为什么？
+        //发请求给服务器确认
+
+        // .then(模拟服务器确认更新成功:        
+        dispatch(updateSuccess(newData));
+        console.log("dispatched")
+    }
+};
+
+const updateSuccess = (newData) => ({
+    type: UPDATE_TROLLEYDATA,
+    data: newData,
 });
