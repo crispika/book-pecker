@@ -48,7 +48,7 @@ class Login extends Component {
                     // 提交表单且数据验证成功后的回调
                     // onFinish={onFinish}
                     onFinish={this.onFinish}
-                    initialValues={{ "email": "123@gmail.com", "password": "123456" }}
+                    // initialValues={{ "email": "123@gmail.com", "password": "123456" }}
                 >
                     <Form.Item
                         className="form-item"

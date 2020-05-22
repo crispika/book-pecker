@@ -5,7 +5,7 @@ import { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Popconfirm, Form, Typography, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons'
 import { content_bg_color } from "../../assets/color"
-import { getTrolleyList, updateTrolleyData, deleteTrolleyData} from "../../redux/actions.js"
+import { getTrolleyList, updateTrolleyData, deleteTrolleyData,clearStateToList} from "../../redux/actions.js"
 import { calSubtotal, formatMoney } from "../../utils/money-calculator"
 
 const { Text } = Typography;
@@ -203,6 +203,10 @@ class Trolley extends Component {
     componentDidMount(){
         this.props.getTrolleyList();
     }
+
+    componentWillUnmount(){
+        this.props.clearStateToList();
+    }
     
 
     handleDelete = key => {
@@ -328,11 +332,12 @@ Trolley.propTypes = {
     getTrolleyList: PropTypes.func.isRequired,
     updateTrolleyData: PropTypes.func.isRequired,
     deleteTrolleyData: PropTypes.func.isRequired,
+    clearStateToList: PropTypes.func.isRequired,
     dataSource: PropTypes.array.isRequired,
 }
 
 
 export default connect(
     state => ({ dataSource: state.trolley_data }),
-    { getTrolleyList, updateTrolleyData, deleteTrolleyData},
+    { getTrolleyList, updateTrolleyData, deleteTrolleyData, clearStateToList},
 )(Trolley) 

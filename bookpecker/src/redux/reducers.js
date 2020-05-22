@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA} from "./action-types"
+import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA, CLEAR_STATE_TO_OBJ, CLEAR_STATE_TO_LIST } from "./action-types"
 
 function book_list(state = [], action) {
     switch (action.type) {
@@ -7,6 +7,8 @@ function book_list(state = [], action) {
             return action.data;
         case DELETE_BOOK:
             return state.filter(book => book.id !== action.data);
+        case CLEAR_STATE_TO_OBJ:
+            return action.data;
         default:
             return state;
     }
@@ -20,6 +22,8 @@ function book_description(state = {}, action) {
         case RECEIVE_BOOK_COMMENTS:
             return Object.assign({}, state, action.data);
         // return Object.assign(state, action.data);
+        case CLEAR_STATE_TO_OBJ:
+            return action.data;
         default:
             return state;
     }
@@ -30,6 +34,8 @@ function trolley_data(state = [], action) {
         case RECEIVE_TROLLEYDATA:
             return action.data;
         case UPDATE_TROLLEYDATA:
+            return action.data;
+        case CLEAR_STATE_TO_LIST:
             return action.data;
         default:
             return state;

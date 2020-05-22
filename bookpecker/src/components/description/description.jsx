@@ -7,7 +7,7 @@ import { PropTypes } from "prop-types";
 import { light_grey } from "../../assets/color";
 import GradeSpread from '../grade-spread';
 import CommentItem from '../comment-item';
-import { getBookInfo, getBookComments } from "../../redux/actions";
+import { getBookInfo, getBookComments,clearStateToObj } from "../../redux/actions";
 import {addToCart} from "../../utils/handleEvent"
 import {formatMoney} from "../../utils/money-calculator"
 
@@ -22,6 +22,10 @@ class Description extends Component {
     componentDidMount() {
         this.props.getBookInfo(this.props.match.params.id);
         this.props.getBookComments(this.props.match.params.id);
+    }
+
+    componentWillUnmount(){
+        this.props.clearStateToObj();
     }
 
     render() {
@@ -154,12 +158,13 @@ class Description extends Component {
 Description.propTypes = {
     book_description: PropTypes.object.isRequired,
     getBookInfo: PropTypes.func.isRequired,
+    clearStateToObj: PropTypes.func.isRequired,
     getBookComments: PropTypes.func.isRequired,
 }
 
 export default connect(
     state => ({ book_description: state.book_description }),
-    { getBookInfo, getBookComments }
+    { getBookInfo, getBookComments,clearStateToObj}
 )(Description);
 
 

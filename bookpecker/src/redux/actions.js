@@ -1,4 +1,4 @@
-import { DELETE_BOOK, RECEIVE_BOOKLIST, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA } from "./action-types";
+import { DELETE_BOOK, RECEIVE_BOOKLIST, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA, CLEAR_STATE_TO_OBJ, CLEAR_STATE_TO_LIST } from "./action-types";
 // for test
 import UUID from "node-uuid";
 import { db_init_table, db_insert_tableMapItem, db_select_table, db_select_MapItem, db_update_trolleyItem, db_delete_trolleyItem } from "../utils/localDb"
@@ -205,7 +205,7 @@ export const getBookList = () => {
                 db_insert_tableMapItem(BOOKINFO, book.id, book)
             });
 
-            Object.keys(book_comments).forEach(id => db_insert_tableMapItem(COMMENTS,id,book_comments[id]))
+            Object.keys(book_comments).forEach(id => db_insert_tableMapItem(COMMENTS, id, book_comments[id]))
 
             // 模拟调用数据库
             let book_list = [];
@@ -247,9 +247,9 @@ export const getBookInfo = (id) => {
             //     }
             // }
 
-            
 
-            const book_info = {book_info:db_select_MapItem(BOOKINFO,id)}
+
+            const book_info = { book_info: db_select_MapItem(BOOKINFO, id) }
             console.log(book_info);
 
             dispatch(receiveBookInfo(book_info));
@@ -275,7 +275,7 @@ export const getBookComments = (id) => {
             //         { username: "Jack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
             //     ]
             // }
-            const book_comments = {book_comments: db_select_MapItem(COMMENTS,id)}
+            const book_comments = { book_comments: db_select_MapItem(COMMENTS, id) }
             dispatch(receiveBookComments(book_comments));
         }, 1000);
     };
@@ -341,10 +341,25 @@ export const deleteTrolleyData = (newData, bookid) => {
 };
 
 
-export const updateSuccess = (newData) => {
+const updateSuccess = (newData) => {
     return {
         type: UPDATE_TROLLEYDATA,
         data: newData,
     }
 };
+
+export const clearStateToObj = () => {
+    return {
+        type: CLEAR_STATE_TO_OBJ,
+        data: {},
+    }
+}
+
+export const clearStateToList = () => {
+    return {
+        type: CLEAR_STATE_TO_LIST,
+        data: [],
+    }
+}
+
 
