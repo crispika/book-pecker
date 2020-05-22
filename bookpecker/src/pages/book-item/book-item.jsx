@@ -5,10 +5,12 @@ import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined } from '@ant-desig
 import { Link } from "react-router-dom";
 import "react-router-dom";
 
+import "./book-item.less"
 import { connect } from 'react-redux';
 import { deleteBook } from "../../redux/actions.js"
 import {addToCart} from "../../utils/handleEvent"
 import {formatMoney} from "../../utils/money-calculator"
+
 
 
 const { Meta } = Card;
@@ -38,7 +40,7 @@ class BookItem extends Component {
             <Card
                 hoverable
                 bordered={false}
-                style={{ width: 300, margin: "0 auto" }}
+                style={{ width: 300, margin: "0 auto"}}
                 // bodyStyle={{width: 300, margin: "0 auto"}}
                 cover={
                     <Link to={`/description/${id}`} >
