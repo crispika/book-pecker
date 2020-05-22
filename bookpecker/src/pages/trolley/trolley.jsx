@@ -5,7 +5,7 @@ import { useContext, useState, useEffect, useRef } from 'react';
 import { Table, Input, Popconfirm, Form, Typography, Button } from 'antd';
 import { EditOutlined } from '@ant-design/icons'
 import { content_bg_color } from "../../assets/color"
-import { getTrolleyList, updateTrolleyData } from "../../redux/actions.js"
+import { getTrolleyList, updateTrolleyData, deleteTrolleyData} from "../../redux/actions.js"
 import { calSubtotal, formatMoney } from "../../utils/money-calculator"
 
 const { Text } = Typography;
@@ -209,11 +209,14 @@ class Trolley extends Component {
         const dataSource = [...this.props.dataSource];
         // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
         const newData = dataSource.filter(item => item.key !== key)
+        
         //TODO 发送删除state并发送给服务器 | 删除localstorage
+        this.props.deleteTrolleyData(newData,key)
 
     };
 
     handleSave = row => {
+        const {id,qty} = row
         const newData = [...this.props.dataSource];
         const index = newData.findIndex(item => row.key === item.key);
         const item = newData[index];
@@ -221,8 +224,9 @@ class Trolley extends Component {
         // this.setState({
         //     dataSource: newData,
         // }); 
-        updateTrolleyData(newData);
-        console.log("updated")
+        // this.props.updateSuccess(newData);
+        this.props.updateTrolleyData(newData,id,qty)
+        console.log(this.props.dataSource)
     };
 
     // 表格每行checkbox的事件回调
@@ -323,11 +327,12 @@ class Trolley extends Component {
 Trolley.propTypes = {
     getTrolleyList: PropTypes.func.isRequired,
     updateTrolleyData: PropTypes.func.isRequired,
+    deleteTrolleyData: PropTypes.func.isRequired,
     dataSource: PropTypes.array.isRequired,
 }
 
 
 export default connect(
     state => ({ dataSource: state.trolley_data }),
-    { getTrolleyList, updateTrolleyData},
-)(Trolley)
+    { getTrolleyList, updateTrolleyData, deleteTrolleyData},
+)(Trolley) 

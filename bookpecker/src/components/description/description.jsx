@@ -25,7 +25,6 @@ class Description extends Component {
     }
 
     render() {
-        console.log(this.props.book_description);
         const { book_info, book_comments } = this.props.book_description
         // console.log(book_info,book_comments);
 

@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA } from "./action-types"
+import { RECEIVE_BOOKLIST, DELETE_BOOK, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA} from "./action-types"
 
 function book_list(state = [], action) {
     switch (action.type) {
@@ -16,21 +16,20 @@ function book_description(state = {}, action) {
     switch (action.type) {
         case RECEIVE_BOOKINFO:
             return Object.assign({}, state, action.data);
-            // return Object.assign(state, action.data); //修改了老状态，导致bug
+        // return Object.assign(state, action.data); //修改了老状态，导致bug
         case RECEIVE_BOOK_COMMENTS:
             return Object.assign({}, state, action.data);
-            // return Object.assign(state, action.data);
+        // return Object.assign(state, action.data);
         default:
             return state;
     }
 }
 
-function trolley_data(state =[], action){
-    switch(action.type){
+function trolley_data(state = [], action) {
+    switch (action.type) {
         case RECEIVE_TROLLEYDATA:
             return action.data;
         case UPDATE_TROLLEYDATA:
-            console.log("updating...");
             return action.data;
         default:
             return state;

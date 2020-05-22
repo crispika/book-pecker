@@ -11,10 +11,11 @@ import {getBookList}from "../../redux/actions.js"
 class BookList extends Component {
     constructor(props){
         super(props)
-        console.log(this.props)
+        // console.log(this.props)
     }
 
     componentDidMount() {
+        // debugger
         this.props.getBookList();
     }
 
@@ -27,7 +28,6 @@ class BookList extends Component {
     render() {
         // debugger
         const {book_list}=this.props;
-        console.log(book_list)
         return (
             <div className="book-list-wrapper"
                 style={{

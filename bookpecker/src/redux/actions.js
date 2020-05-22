@@ -1,10 +1,8 @@
 import { DELETE_BOOK, RECEIVE_BOOKLIST, RECEIVE_BOOKINFO, RECEIVE_BOOK_COMMENTS, RECEIVE_TROLLEYDATA, UPDATE_TROLLEYDATA } from "./action-types";
 // for test
 import UUID from "node-uuid";
-import { db_init_table, db_insert_tableMapItem, db_select_table, db_select_MapItem } from "../utils/localDb"
-import { BOOKINFO, TROLLEY } from "../utils/db-types"
-import bookList from "../pages/book-list/book-list";
-import bookItem from "../pages/book-item/book-item";
+import { db_init_table, db_insert_tableMapItem, db_select_table, db_select_MapItem, db_update_trolleyItem, db_delete_trolleyItem } from "../utils/localDb"
+import { BOOKINFO, TROLLEY, COMMENTS } from "../utils/db-types"
 
 export const deleteBook = (book_id) => ({ type: DELETE_BOOK, data: book_id });
 
@@ -168,12 +166,46 @@ export const getBookList = () => {
                 },
             ];
 
+            const book_comments = {
+                "book1": [{ username: "", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "Jack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book2": [{ username: "BlackJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "BlackJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book3": [{ username: "RedJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "RedJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book4": [{ username: "GreenJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "GreenJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book5": [{ username: "YellowJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "YellowJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book6": [{ username: "PinkJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "PinkJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book7": [{ username: "WhiteJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "WhiteJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book8": [{ username: "BlueJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "BlueJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+                "book9": [{ username: "OrangeJack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+                { username: "OrangeJack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+                ],
+            }
+
             // 存入本地数据库，方便添加到购物车的数据沟通
             db_init_table(BOOKINFO);
+            db_init_table(TROLLEY);
+            db_init_table(COMMENTS);
+
             book_data.forEach((book) => {
-                console.log(book);
                 db_insert_tableMapItem(BOOKINFO, book.id, book)
             });
+
+            Object.keys(book_comments).forEach(id => db_insert_tableMapItem(COMMENTS,id,book_comments[id]))
 
             // 模拟调用数据库
             let book_list = [];
@@ -192,29 +224,34 @@ const receiveBookList = (book_list) => ({
 });
 
 // 根据id向服务器fetch书籍的详情
-
 export const getBookInfo = (id) => {
-    return (dispatch, id) => {
-        // console.log(`正在获取id为${id}的书的book_info`);
+    return (dispatch) => {
+
         //模拟异步获取数据
         setTimeout(() => {
-            const book_info = {
-                book_info: {
-                    id: id,
-                    bookname: "猫不存在",
-                    cover: "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
-                    author: " [美] 厄休拉・勒古恩",
-                    "ISBN": "9787540486198",
-                    "press": "湖南文艺出版社",
-                    "publish_year": "2020-5",
-                    "number_of_pages": "408",
-                    "price": "49.8",
-                    "grade": "8",
-                    "star": "4",
-                    "grade_spread": [["5星", 50], ["4星", 0], ["3星", 50], ["2星", 0], ["1星", 0]],
-                    "description": "<p>科幻文化领域专业影响力品牌、亚太科幻大会主办方未来事务管理局重磅新作，致力打造中国科幻的黄金时代。<p/><p>从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。17 个国内外科幻作家有关猫的科幻故事，5 篇与猫相关的科幻趣文。<p/><p>内附《牛筋名猫录》漫画师阿科创作的刘慈欣、韩松、儒勒・凡尔纳、阿瑟・C・克拉克、厄休拉・勒古恩等 9 位科幻作家猫漫画。<p/><p>融合虚构与非虚构，带你领略：有了猫，你就有了整个宇宙；在你腿上的毛茸茸，藏着宇宙的大秘密。</p>"
-                }
-            }
+            // const book_info = {
+            //     book_info: {
+            //         id: id,
+            //         bookname: "猫不存在",
+            //         cover: "https://s1.ax1x.com/2020/05/17/YRcJKI.jpg",
+            //         author: " [美] 厄休拉・勒古恩",
+            //         "ISBN": "9787540486198",
+            //         "press": "湖南文艺出版社",
+            //         "publish_year": "2020-5",
+            //         "number_of_pages": "408",
+            //         "price": "49.8",
+            //         "grade": "8",
+            //         "star": "4",
+            //         "grade_spread": [["5星", 50], ["4星", 0], ["3星", 50], ["2星", 0], ["1星", 0]],
+            //         "description": "<p>科幻文化领域专业影响力品牌、亚太科幻大会主办方未来事务管理局重磅新作，致力打造中国科幻的黄金时代。<p/><p>从猫开始，全世界的科幻名家带你走出熟悉的日常，去往未知的奇境。17 个国内外科幻作家有关猫的科幻故事，5 篇与猫相关的科幻趣文。<p/><p>内附《牛筋名猫录》漫画师阿科创作的刘慈欣、韩松、儒勒・凡尔纳、阿瑟・C・克拉克、厄休拉・勒古恩等 9 位科幻作家猫漫画。<p/><p>融合虚构与非虚构，带你领略：有了猫，你就有了整个宇宙；在你腿上的毛茸茸，藏着宇宙的大秘密。</p>"
+            //     }
+            // }
+
+            
+
+            const book_info = {book_info:db_select_MapItem(BOOKINFO,id)}
+            console.log(book_info);
+
             dispatch(receiveBookInfo(book_info));
         }, 1000);
     };
@@ -228,16 +265,17 @@ const receiveBookInfo = (book_info) => ({
 
 // 根据id向服务器fetch书籍的评论
 export const getBookComments = (id) => {
-    return (dispatch, id) => {
+    return (dispatch) => {
         // console.log(`正在获取id为${id}的书的book_comments`);
         //模拟异步获取数据 
         setTimeout(() => {
-            const book_comments = {
-                book_comments: [
-                    { username: "Jack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
-                    { username: "Jack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
-                ]
-            }
+            // const book_comments = {
+            //     book_comments: [
+            //         { username: "Jack", comment: "you jump i jump", avatar: "https://cdnb.artstation.com/p/assets/images/images/006/534/075/smaller_square/gin-26.jpg?1499327788", number_of_like: 66, number_of_dislike: 33, my_action: "disliked", created_time: "20200208T080910" },
+            //         { username: "Jack+20", comment: "you jump i will not jump with you", avatar: "https://th.bing.com/th/id/OIP.V15VTnxfK8tRQOfGjO2UnQAAAA?pid=Api&rs=1", number_of_like: 666, number_of_dislike: 333, my_action: "liked", created_time: "20200508T080910" },
+            //     ]
+            // }
+            const book_comments = {book_comments: db_select_MapItem(COMMENTS,id)}
             dispatch(receiveBookComments(book_comments));
         }, 1000);
     };
@@ -257,12 +295,14 @@ export const getTrolleyList = () => {
         // 从本地数据库调数据
         const trolley_db = db_select_table(TROLLEY);
         const trolley_data = []
-        Object.keys(trolley_db).forEach(key => {
-            let trolley_item = db_select_MapItem(BOOKINFO, key);
-            trolley_item.qty = trolley_db[key];
-            trolley_item.key = key;
-            trolley_data.push(trolley_item)
-        })
+        if (Object.keys(trolley_db).length > 0) {
+            Object.keys(trolley_db).forEach(key => {
+                let trolley_item = db_select_MapItem(BOOKINFO, key);
+                trolley_item.qty = trolley_db[key];
+                trolley_item.key = key;
+                trolley_data.push(trolley_item)
+            })
+        }
         dispatch(receiveTrolleyData(trolley_data));
     }
 };
@@ -272,20 +312,39 @@ const receiveTrolleyData = (trolley_data) => ({
     data: trolley_data,
 });
 
-export const updateTrolleyData = (newData) => {
-    console.log('1111') //console 成功
-    
+export const updateTrolleyData = (newData, bookid, qty) => {
+
     return dispatch => {
-        console.log(newData);   //console失败，为什么？
         //发请求给服务器确认
+        // local stroage 模拟服务器更新：
+        db_update_trolleyItem(TROLLEY, bookid, qty)
 
         // .then(模拟服务器确认更新成功:        
         dispatch(updateSuccess(newData));
         console.log("dispatched")
     }
+
 };
 
-const updateSuccess = (newData) => ({
-    type: UPDATE_TROLLEYDATA,
-    data: newData,
-});
+export const deleteTrolleyData = (newData, bookid) => {
+
+    return dispatch => {
+        //发请求给服务器确认
+        // local stroage 模拟服务器更新：
+        db_delete_trolleyItem(TROLLEY, bookid)
+
+        // .then(模拟服务器确认更新成功:        
+        dispatch(updateSuccess(newData));
+        console.log("dispatched")
+    }
+
+};
+
+
+export const updateSuccess = (newData) => {
+    return {
+        type: UPDATE_TROLLEYDATA,
+        data: newData,
+    }
+};
+

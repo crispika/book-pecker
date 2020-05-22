@@ -13,13 +13,13 @@ import Description from "./components/description/description"
 import Login from "./pages/login/login"
 import Register from "./pages/register/register"
 import { content_bg_color, footer_bg_color } from "./assets/color";
+import {db_select_table,db_init_table} from "./utils/localDb"
+import {TROLLEY,BOOKINFO} from "./utils/db-types"
 
 const { Content, Footer } = Layout;
 
 export default class App extends Component {
-
-
-
+    
     render() {
         return (
             <div>
