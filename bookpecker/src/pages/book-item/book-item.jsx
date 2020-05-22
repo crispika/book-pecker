@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
-import { Card } from 'antd';
+import { Card, Typography } from 'antd';
 import { StarOutlined, ShareAltOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import "react-router-dom";
@@ -8,9 +8,11 @@ import "react-router-dom";
 import { connect } from 'react-redux';
 import { deleteBook } from "../../redux/actions.js"
 import {addToCart} from "../../utils/handleEvent"
+import {formatMoney} from "../../utils/money-calculator"
 
 
 const { Meta } = Card;
+const {Text, Paragraph} = Typography;
 
 class BookItem extends Component {
 
@@ -31,7 +33,7 @@ class BookItem extends Component {
     // }
 
     render() {
-        const { bookname, short_intro, cover, id } = this.props.book_info;
+        const { bookname, short_intro, cover, id, price } = this.props.book_info;
         return (
             <Card
                 hoverable
@@ -42,9 +44,11 @@ class BookItem extends Component {
                     <Link to={`/description/${id}`} >
                     <div style={{
                         width: '100%',
-                        height: '200px',
+                        height: '425px',
                         background: `url(${cover}) no-repeat center`,
-                        backgroundSize: 'contain'
+                        backgroundSize: 'cover',
+                        // boxSizing:"border-box",
+                        // border:"1px solid"
                     }}></div>
                         {/* <img
                             style={{width:"100%", height: '210px'}}
@@ -64,7 +68,13 @@ class BookItem extends Component {
                 <Link to={`/description/${id}`} >
                 <Meta
                     title={bookname}
-                    description={short_intro}
+                    description={
+                        <div>
+                            <p style={{marginBottom: 5, marginLeft:-2}}><Text type="warning">{formatMoney(price)}</Text></p>
+                            <Paragraph type="secondary" style={{marginBottom: 5}}>{short_intro}</Paragraph>
+                        </div>
+                        
+                    }
                 />
                 </Link>
             </Card>

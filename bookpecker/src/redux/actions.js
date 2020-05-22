@@ -210,8 +210,8 @@ export const getBookList = () => {
             // 模拟调用数据库
             let book_list = [];
             book_data.forEach(book => {
-                const { bookname, short_intro, id, cover } = book;
-                book_list.push({ bookname, short_intro, id, cover });
+                const { bookname, short_intro, id, cover, price } = book;
+                book_list.push({ bookname, short_intro, id, cover, price });
             });
             dispatch(receiveBookList(book_list));
         }, 100);
@@ -291,19 +291,20 @@ const receiveBookComments = (book_comments) => ({
 export const getTrolleyList = () => {
     return (dispatch) => {
         // 异步从服务器取数据
-
-        // 从本地数据库调数据
-        const trolley_db = db_select_table(TROLLEY);
-        const trolley_data = []
-        if (Object.keys(trolley_db).length > 0) {
-            Object.keys(trolley_db).forEach(key => {
-                let trolley_item = db_select_MapItem(BOOKINFO, key);
-                trolley_item.qty = trolley_db[key];
-                trolley_item.key = key;
-                trolley_data.push(trolley_item)
-            })
-        }
-        dispatch(receiveTrolleyData(trolley_data));
+        setTimeout(() => {
+            // 从本地数据库调数据
+            const trolley_db = db_select_table(TROLLEY);
+            const trolley_data = []
+            if (Object.keys(trolley_db).length > 0) {
+                Object.keys(trolley_db).forEach(key => {
+                    let trolley_item = db_select_MapItem(BOOKINFO, key);
+                    trolley_item.qty = trolley_db[key];
+                    trolley_item.key = key;
+                    trolley_data.push(trolley_item)
+                })
+            }
+            dispatch(receiveTrolleyData(trolley_data));
+        }, 100);
     }
 };
 
@@ -316,12 +317,14 @@ export const updateTrolleyData = (newData, bookid, qty) => {
 
     return dispatch => {
         //发请求给服务器确认
-        // local stroage 模拟服务器更新：
-        db_update_trolleyItem(TROLLEY, bookid, qty)
+        setTimeout(() => {
+            // local stroage 模拟服务器更新：
+            db_update_trolleyItem(TROLLEY, bookid, qty)
 
-        // .then(模拟服务器确认更新成功:        
-        dispatch(updateSuccess(newData));
-        console.log("dispatched")
+            // .then(模拟服务器确认更新成功:        
+            dispatch(updateSuccess(newData));
+            console.log("dispatched")
+        }, 100);
     }
 
 };
@@ -331,11 +334,13 @@ export const deleteTrolleyData = (newData, bookid) => {
     return dispatch => {
         //发请求给服务器确认
         // local stroage 模拟服务器更新：
-        db_delete_trolleyItem(TROLLEY, bookid)
+        setTimeout(() => {
+            db_delete_trolleyItem(TROLLEY, bookid)
 
-        // .then(模拟服务器确认更新成功:        
-        dispatch(updateSuccess(newData));
-        console.log("dispatched")
+            // .then(模拟服务器确认更新成功:        
+            dispatch(updateSuccess(newData));
+            console.log("dispatched")
+        }, 100);
     }
 
 };

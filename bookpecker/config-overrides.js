@@ -38,6 +38,7 @@ module.exports = override(
             '@heading-color':'rgba(46, 50, 44,0.85)',
             '@text-color':'rgba(46, 50, 44,0.65)',
             '@text-color-secondary':'rgba(46, 50, 44,0.45)',
+            '@warning-color': '#98554B',
         },
         // },
     }),

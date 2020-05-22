@@ -43,10 +43,10 @@ class BookList extends Component {
             >
                 {/* 栅格布局套card样式的book-item */}
                 {Object.keys(book_list).length > 0 &&
-                    (<Row justify="space-around" align="middle" gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
+                    (<Row justify="space-around" align="top" gutter={[32, { xs: 8, sm: 16, md: 24, lg: 32 }]}>
                         {book_list.map(
                             (book_info, index) =>
-                                <Col span={8} key={index}>
+                                <Col span={6} key={index}>
                                     {/* <BookItem  book_info={book_info} pickBook={this.pickBook}/> */}
                                     <BookItem book_info={book_info} />
                                 </Col>
