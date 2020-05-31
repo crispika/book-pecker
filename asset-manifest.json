@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "./static/css/main.15025dd0.chunk.css",
+    "main.js": "./static/js/main.db2b0838.chunk.js",
+    "main.js.map": "./static/js/main.db2b0838.chunk.js.map",
+    "runtime-main.js": "./static/js/runtime-main.e28e99e4.js",
+    "runtime-main.js.map": "./static/js/runtime-main.e28e99e4.js.map",
+    "static/css/2.3c6a4226.chunk.css": "./static/css/2.3c6a4226.chunk.css",
+    "static/js/2.2cd9169a.chunk.js": "./static/js/2.2cd9169a.chunk.js",
+    "static/js/2.2cd9169a.chunk.js.map": "./static/js/2.2cd9169a.chunk.js.map",
+    "index.html": "./index.html",
+    "precache-manifest.577b0ff2d77b2c8f65076771c6928c41.js": "./precache-manifest.577b0ff2d77b2c8f65076771c6928c41.js",
+    "service-worker.js": "./service-worker.js",
+    "static/css/2.3c6a4226.chunk.css.map": "./static/css/2.3c6a4226.chunk.css.map",
+    "static/css/main.15025dd0.chunk.css.map": "./static/css/main.15025dd0.chunk.css.map",
+    "static/js/2.2cd9169a.chunk.js.LICENSE.txt": "./static/js/2.2cd9169a.chunk.js.LICENSE.txt",
+    "static/media/pecker-logo.png": "./static/media/pecker-logo.b413e67c.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.e28e99e4.js",
+    "static/css/2.3c6a4226.chunk.css",
+    "static/js/2.2cd9169a.chunk.js",
+    "static/css/main.15025dd0.chunk.css",
+    "static/js/main.db2b0838.chunk.js"
+  ]
+}
